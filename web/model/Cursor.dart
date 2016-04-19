@@ -1,4 +1,5 @@
-import 'IBlock.dart';
+import 'dart:math';
+import 'controller/config.dart';
 // Directions for the Cursor
 enum Direction
 {
@@ -11,8 +12,8 @@ enum Direction
 class Cursor
 {
   // Pointers for two blocks
-  Block cursorblock01;
-  Block cursorblock02;
+  Point cursorblock01;
+  Point cursorblock02;
 
   // Constructor
   Cursor(this.cursorblock01,this.cursorblock02) {}
@@ -23,6 +24,7 @@ class Cursor
     switch(cursorDirection)
     {
       case Direction.down:
+          cursorblock01.y
         break;
       case Direction.up:
         break;

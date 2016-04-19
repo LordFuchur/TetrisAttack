@@ -3,10 +3,7 @@
 
 import 'dart:html';
 
-void main() {
-  querySelector('#output').text = 'Your Dart app is running.';
-}
-public class TestClass
+void main()
 {
-  Integer LOL;
+  querySelector('#output').text = 'Your Dart app is running.';
 }

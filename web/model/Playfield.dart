@@ -18,9 +18,6 @@ class Playfield
   int level;
   int fieldUpSpeed;
 
-
-
-
   Playfield(this.height,this.width)
   {
     //nonPrimitives

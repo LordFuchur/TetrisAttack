@@ -1,8 +1,13 @@
 //dostuff
-
+enum Actions
+{
+  moveCursorUp,
+  moveCursorRight,
+  moveCursorDown,
+  moveCursorLeft
+}
 class Action
 {
-
-  Action()
-  {}
+  Actions _action;
+  Action(_action) {}
 }

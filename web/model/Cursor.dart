@@ -41,4 +41,21 @@ class Cursor
         break;
     }
   }
+
+  int getPointLeftX()
+  {
+    return cursorBlock_left.x;
+  }
+  int getPointLeftY()
+  {
+    return cursorBlock_left.y;
+  }
+  int getPointRightX()
+  {
+    return cursorBlock_right.x;
+  }
+  int getPointRightY()
+  {
+    return cursorBlock_right.y;
+  }
 }

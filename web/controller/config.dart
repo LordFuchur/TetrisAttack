@@ -5,6 +5,7 @@ class config
   static int fieldX = 24;
   static int fieldY = 48;
 
+
 /* Field
   upwards
   [0][0] = column[0]row[0]

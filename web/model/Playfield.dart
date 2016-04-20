@@ -53,9 +53,9 @@ class Playfield
   swapBlock()
   {
     //simple change with temp variable
-    Block temp = playfield[cu][block1.x];
-    playfield[block1.y][block1.x] = playfield[block2.y][block2.x];
-    playfield[block2.y][block2.x] = temp;
+    Block temp = playfield[cursor.getPointLeftY()][cursor.getPointLeftX()];
+    playfield[cursor.getPointLeftY()][cursor.getPointLeftX()] = playfield[cursor.getPointRightY()][cursor.getPointRightX()];
+    playfield[cursor.getPointRightY()][cursor.getPointRightY()] = temp;
   }
   void checkForDissolve()
   {

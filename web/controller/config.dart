@@ -4,6 +4,7 @@ class config
   static int dimBlockY = 4;
   static int fieldX = 24;
   static int fieldY = 48;
+  static List<String> colors = [red,green,blue,yellow];
 
 
 /* Field
@@ -33,4 +34,11 @@ class config
   {
     return fieldY;
   }
+
+  // Color list getter
+  static List<String> getColorList()
+  {
+    return colors;
+  }
+
 }

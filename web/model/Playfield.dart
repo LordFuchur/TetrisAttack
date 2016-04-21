@@ -1,17 +1,26 @@
 import 'dart:collection';
 import 'dart:math';
+
 import 'Block.dart';
 import 'Action.dart';
 import 'Cursor.dart';
+import '../controller/config.dart';
 
 class Playfield
 {
+
   //not im UML yet
   int height;
   int width;
   //end of not in UML
 
+  //the dimension [0][n]
+  //the [0][n] are the blocks, that are currently pushed into the accessible playfield
+  //hence cant be used in part of a dissolve
   List<List<Block>> playfield;
+  //block, which are added to this list, are part of a dissolve , so the wont be used
+  //again while checking the other blocks of the same combo
+  List<Point> comboPartList;
   Queue<Action> actionQueue;
   Cursor cursor;
   int comboValue;
@@ -59,6 +68,25 @@ class Playfield
   }
   void checkForDissolve()
   {
+    //TODO change color, so that it can be generic
+    Block actualBlock = new Block("black");
 
+    //we have to start at row 1 rather than on row 0, because row 0 is the row of blocks, which are not yet part of the playfield
+
+    //loop over all blocks of the field, to find dissolvable constructions
+    //we just have to check every block, thats above, or right of the current looked at block
+    //otherwise, we would do some unneeded checks
+    //TODO optimization here, by excluding the borderblocks of the whole playfield. Code here is just, so it can run
+    for(int y = 1;y<playfield.length;y++)
+    {
+      for(int x = 0;x<playfield[y].length;x++)
+      {
+        //make sure, we wont get an index out of bounds exception
+        if(!((y+1) == config.getFieldSizeY()))
+        {
+          
+        }
+      }
+    }
   }
 }

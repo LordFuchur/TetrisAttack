@@ -13,4 +13,8 @@ class Block
   {
     isFalling = falling;
   }
+  bool operator ==(Block b)
+  {
+    return color == b.color;
+  }
 }

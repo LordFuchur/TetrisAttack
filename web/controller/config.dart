@@ -1,3 +1,5 @@
+import "dart:math";
+
 class config
 {
   static int dimBlockX = 4;
@@ -5,7 +7,8 @@ class config
   static int fieldX = 24;
   static int fieldY = 48;
   static List<String> colors = ['red','green','blue','yellow'];
-
+  static Point cursor01 = new Point(0,0);
+  static Point cursor02 = new Point(1,0);
 
 /* Field
   upwards

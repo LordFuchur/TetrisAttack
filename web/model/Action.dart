@@ -4,7 +4,8 @@ enum Actions
   moveCursorUp,
   moveCursorRight,
   moveCursorDown,
-  moveCursorLeft
+  moveCursorLeft,
+  swapBlock
 }
 class Action
 {

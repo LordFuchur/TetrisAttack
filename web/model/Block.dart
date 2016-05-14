@@ -2,6 +2,7 @@ import "dart:collection";
 import "Command.dart";
 import "Block.dart";
 import "dart:math";
+import "Playfield.dart";
 
 class Block
 {
@@ -35,9 +36,9 @@ class Block
     //throw new Exception("not implemented yet");
     _dissolveCounter++;
   }
-  void checkNeighbour(List<Block> dissolveList,List<List<Block>> playfield)
+  void checkNeighbour(List<Block> dissolveList,Playfield playfield)
   {
-    //if(playfield.isValidCoords)
+    if(playfield.i)
     //throw new Exception("not implemented yet");
   }
   void setPos(Point pos)

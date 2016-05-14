@@ -8,30 +8,37 @@ class Block
   String _color;
   int _dissolveCounter; //beim auswerten auch gleichzeitig der punktwert für diesen block(bei bedarf eventuell abbildungsfunktion?)
   bool _isFalling;
+  bool _isLocked;
   Point _Pos;
 
   String getColor()
   {
-    throw new Exception("not implemented yet");
-    return "";
+    //throw new Exception("not implemented yet");
+    return _color;
   }
   bool isLocked()
   {
-    throw new Exception("not implemented yet");
-    return true;
+    //throw new Exception("not implemented yet");
+    return _isLocked;
   }
   bool isFalling()
   {
-    throw new Exception("not implemented yet");
-    return false;
+    //throw new Exception("not implemented yet");
+    return _isFalling;
+  }
+  int getDissolveCounter()
+  {
+    return this._dissolveCounter;
   }
   void setToDissolve()
   {
-    throw new Exception("not implemented yet");
+    //throw new Exception("not implemented yet");
+    _dissolveCounter++;
   }
-  void checkNeighbour(List<Block> dissolveList)
+  void checkNeighbour(List<Block> dissolveList,List<List<Block>> playfield)
   {
-    throw new Exception("not implemented yet");
+    //if(playfield.isValidCoords)
+    //throw new Exception("not implemented yet");
   }
   void setPos(Point pos)
   {

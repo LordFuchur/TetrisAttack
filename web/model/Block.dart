@@ -4,6 +4,10 @@ import "Block.dart";
 import "dart:math";
 import "Playfield.dart";
 
+
+List<String> typedList = <String>["normalBlock"];
+
+
 class Block
 {
   String _color;
@@ -11,6 +15,8 @@ class Block
   bool _isFalling;
   bool _isLocked;
   Point _Pos;
+
+
 
   String getColor()
   {
@@ -47,7 +53,12 @@ class Block
   void checkNeighbour(List<Block> dissolveList,Playfield playfield)
   {
     //first check left & right
-    if(playfield.isValidCoords(new Point(_Pos.x -1,_Pos.y) && playfield.)
+    if(playfield.isValidCoords(new Point(_Pos.x - 1,_Pos.y)) &&
+                               playfield.isValidCoords(new Point(_Pos.x + 1,_Pos.y)) &&
+                               playfield.getBlockFromField(new Point(_Pos.x -1,_Pos.y))._color == playfield.getBlockFromField(new Point(_Pos.x+1,_Pos.y))._color)
+    {
+      dissolveList.add
+    }
     //throw new Exception("not implemented yet");
   }
   void setPos(Point pos)

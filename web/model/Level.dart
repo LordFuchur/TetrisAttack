@@ -14,7 +14,6 @@ class Level
 
   }
 
-
   List<String> getColors ()
   {
     return _colors;

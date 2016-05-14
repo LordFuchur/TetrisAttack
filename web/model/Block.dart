@@ -61,18 +61,30 @@ class Block
                                playfield.isValidCoords(new Point(_Pos.x + 1,_Pos.y)) &&
                                playfield.getBlockFromField(new Point(_Pos.x -1,_Pos.y))._color == playfield.getBlockFromField(new Point(_Pos.x+1,_Pos.y))._color)
     {
-      dissolveList.add()
+      dissolveList.add(this);
+      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x - 1,_Pos.y)));
+      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x + 1,_Pos.y)));
+    }
+
+    if(playfield.isValidCoords(new Point(_Pos.x,_Pos.y - 1)) &&
+        playfield.isValidCoords(new Point(_Pos.x,_Pos.y + 1)) &&
+        playfield.getBlockFromField(new Point(_Pos.x,_Pos.y - 1))._color == playfield.getBlockFromField(new Point(_Pos.x,_Pos.y+1))._color)
+    {
+      dissolveList.add(this);
+      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x,_Pos.y - 1)));
+      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x,_Pos.y + 1)));
     }
     //throw new Exception("not implemented yet");
   }
   void setPos(Point pos)
   {
-    throw new Exception("not implemented yet");
+    this._Pos = pos;
+    //throw new Exception("not implemented yet");
   }
   Point getPos()
   {
-    throw new Exception("not implemented yet");
-    return new Point(-1,-1);
+    //throw new Exception("not implemented yet");
+    return this._Pos;
   }
 
 }

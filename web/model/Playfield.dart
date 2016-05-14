@@ -1,17 +1,27 @@
 import "dart:collection";
+import "dart:async";
 import "Command.dart";
 import "Block.dart";
 import "dart:math";
 import "Level.dart";
 import "Cursor.dart";
 
+enum eventType
+{
+  Win,
+  GameOver
+}
+
+
 class Playfield
 {
+  static int unusableRows = 1;
   List<List<Block>> _field;
   Queue<Command> _actionQueue = new Queue<Command>();
-  //Streamcontroller hier kommt der eventhandler hin
+  StreamController _eventController = new StreamController.broadcast();
+
   double _currentScore;
-  int _currentLevelTime;
+  int _currentLevelTime; // in seconds
   List<Block> _toDissolve;
   int _fieldX;
   int _fieldY;
@@ -106,29 +116,122 @@ class Playfield
   }
 
   /**
-   * Triggered periodic by a Timer from the Controller, ...
-   *
+   * Triggered periodic by a Timer from the Controller, and push the
+   * complete field up and check afterwards of Game Over
    */
   void timerFieldUp()
   {
+    // Move the Field up and update the Position of the Blocks
+    for(int y = (_fieldY - 1); y >= 0; y--)
+    {
+      for(int x = 0; x < _fieldX; x++)
+      {
+        // move block [x][y] up
+        _field[x][y + 1] = _field[x][y];
+        // update the Position of the moved Block
+        _field[x][y + 1].setPos(new Point(x,y + 1));
+        // delete Block at the old Position
+        _field[x][y] = null;
+      }
+    }
 
+    // check for Game Over
+    for(int r = 0; r < _fieldX; r++)
+    {
+      if(_field[r][_fieldY] != null)
+      {
+        // a Block reached the upper Border of the play field
+        // Raise Game Over Event
+        fetch(eventType.GameOver);
+      }
+    }
 
-
-    throw new Exception("not implemented yet");
+    throw new Exception("not tested yet");
   }
 
-
-  void DecreaseLevelTime()
+  /**
+   * Triggered periodic by a Timer from the Controller, and increase
+   * the Level Time and check for Win or Game Over
+   */
+  void increaseLevelTime()
   {
+    // Count the Level Time up
+    _currentLevelTime++;
 
+    // Check if the end of the level reached
+    if(_currentLevelTime >= _level.getLevelTime())
+    {
+      // Check if the required score reached
+      if(_currentScore >= _level.getRequiredScore())
+      {
+        // Raise Win Event
+        fetch(eventType.Win);
+      }
+      else
+      {
+        // Raise Game Over Event
+        fetch(eventType.GameOver);
+      }
+    }
 
+    throw new Exception("not tested yet");
+  }
+
+  /**
+   * Triggered periodic by a Timer from the Controller, check at
+   * every Block if this Block can fall and move it down.
+   */
+  void timerApplyGravity()
+  {
+    bool somethingFalling = false;
+    //
+    for(int y = (1 + unusableRows); y < _fieldY; y++)
+    {
+      for(int x = 0; x < _fieldX; x++)
+      {
+        // check if the block can fall
+        if(isValidCoords(new Point(x,y - 1)))
+        {
+          if(_field[x][y - 1] == null)
+          {
+            _field[x][y].setFalling(true);
+            _field[x][y].setIsLocked(true);
+          }
+        }
+
+        // if block falling
+        if(_field[x][y].isFalling())
+        {
+          // move Block down (falling)
+          _field[x][y - 1] = _field[x][y];
+          // delete old Block Position
+          _field[x][y] = null;
+
+          // check if under the new position of the moved block a other block available
+          if(isValidCoords(new Point(x,y - 2)))
+          {
+            if(_field[x][y - 2] != null)
+            {
+              // Only remove states if locked and falling both true,
+              // secure the option if blocks are locked cause of a combo
+              if(_field[x][y - 1].isFalling() && _field[x][y - 1].isLocked())
+              {
+                _field[x][y - 1].setFalling(false);
+                _field[x][y - 1].setIsLocked(false);
+              }
+            }
+          }
+          // at least one block is still falling
+          somethingFalling = true;
+        }
+      } // end of for loop
+
+      // Only execute the dissolve trigger if no more blocks are falling
+      if(!somethingFalling) _triggerDissolve();
+    }
 
     throw new Exception("not implemented yet");
   }
-
-
-  void timerApplyGravity()
-  {throw new Exception("not implemented yet");}
 
   /**
    * Check a coordinate are valid
@@ -139,17 +242,13 @@ class Playfield
   {
     bool valid = false;
 
-    ((coordinate.x >= 0) && (coordinate.x < _fieldX)) ? valid = true : valid = false;
-    ((coordinate.y >= 0) && (coordinate.y < _fieldY)) ? valid = true : valid = false;
+    ((coordinate.x >= 0 + unusableRows) && (coordinate.x < _fieldX)) ? valid = true : valid = false;
+    ((coordinate.y >= 0 + unusableRows) && (coordinate.y < _fieldY)) ? valid = true : valid = false;
 
     throw new Exception("not tested yet");
 
     return valid;
   }
-
-
-  void _raiseEvent()
-  {throw new Exception("not implemented yet");}
 
 
   /**
@@ -181,6 +280,7 @@ class Playfield
         for(int y = currentBlockPos.y; y < _fieldY; y++)
         {
           _field[currentBlockPos.x][y].setFalling(true);
+          _field[currentBlockPos.x][y].setIsLocked(true);
         }
 
         // add Points to Score
@@ -193,21 +293,81 @@ class Playfield
     throw new Exception("not tested yet");
   }
 
-
-  void addRow(List<String> blockNameList)
+  /**
+   * Create and add a new Row into the play field.
+   * blockNameList: a List of the available Blocks for this Level as String
+   * colors: a List of available Colors for Blocks in this Level as String(Hex)
+   */
+  void addRow(List<String> blockNameList,List<String> colors)
   {
+    Block newBlock;
     var rng = new Random();
+    int rngBlock;
+    int rngColor;
 
+    // create new Blocks till the length of the play field
     for(int r = 0; r < _fieldX; r++)
     {
-      
-    }
+      // choose a random Block Type and Color
+      rngBlock = rng.nextInt(blockNameList.length);
+      rngColor = rng.nextInt(colors.length);
 
-    throw new Exception("not implemented yet");
+      // create a Block of the chosen Type with random Color
+      // NOTE: Need to be changed if new BlockTypes are Available in Block.dart !!!
+      switch(blockNameList[rngBlock])
+      {
+        case "normalBlock":
+            newBlock = new Block(colors[rngColor],new Point(r,0));
+          break;
+
+        default:
+          newBlock = new Block(colors[rngColor],new Point(r,0));
+          throw new Exception("Playfield:addRow => BlockType was not detected!");
+          break;
+
+      } // end switch case
+
+      // insert the new Block into the Field
+      _field[r][0] = newBlock;
+
+    } // end for loop
+
+    throw new Exception("not tested yet");
   }
 
+  /**
+   * Get a Block on this Position
+   * coord: a Position on the field as Point
+   * return: Block or Null
+   */
   Block getBlockFromField(Point coord)
   {
-    return _field[coord.x][coord.y];
+    return (isValidCoords(coord)) ? _field[coord.x][coord.y] : null;
   }
+
+  /**
+   * Fetch Method for the Event Stream. This method is raised in this class
+   * to created a Custom Event which are declared and defined in this Method and
+   * in the eventType Enum.
+   */
+  fetch(eventType type)
+  {
+    // create a new Event and push it on the Stream
+    switch(type)
+    {
+      case eventType.GameOver:
+        _eventController.add(eventType.GameOver);
+        break;
+
+      case eventType.Win:
+        _eventController.add(eventType.Win);
+        break;
+    }
+  }
+
+  /**
+   * Stream who send Custom Events which are declared in the fetch method.
+   */
+  Stream get allEvents => _eventController.stream;
+
 }

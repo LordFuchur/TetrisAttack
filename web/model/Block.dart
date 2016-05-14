@@ -16,8 +16,12 @@ class Block
   bool _isLocked;
   Point _Pos;
 
-
-
+  Block(this._color,this._Pos)
+  {
+    _dissolveCounter = 0;
+    _isFalling = false;
+    _isLocked = false;
+  }
   String getColor()
   {
     //throw new Exception("not implemented yet");
@@ -57,7 +61,7 @@ class Block
                                playfield.isValidCoords(new Point(_Pos.x + 1,_Pos.y)) &&
                                playfield.getBlockFromField(new Point(_Pos.x -1,_Pos.y))._color == playfield.getBlockFromField(new Point(_Pos.x+1,_Pos.y))._color)
     {
-      dissolveList.add
+      dissolveList.add()
     }
     //throw new Exception("not implemented yet");
   }

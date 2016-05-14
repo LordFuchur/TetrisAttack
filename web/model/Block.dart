@@ -22,6 +22,10 @@ class Block
     //throw new Exception("not implemented yet");
     return _isLocked;
   }
+  void setIsLocked(bool value)
+  {
+    this._isLocked = value;
+  }
   bool isFalling()
   {
     //throw new Exception("not implemented yet");
@@ -43,7 +47,7 @@ class Block
   void checkNeighbour(List<Block> dissolveList,Playfield playfield)
   {
     //first check left & right
-    if(playfield.isValidCoords(new Point(_Pos.x -1,_Pos.y) && playfield)
+    if(playfield.isValidCoords(new Point(_Pos.x -1,_Pos.y) && playfield.)
     //throw new Exception("not implemented yet");
   }
   void setPos(Point pos)

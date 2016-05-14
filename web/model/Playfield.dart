@@ -346,9 +346,23 @@ class Playfield
   }
 
   /**
+   * Take a Block in insert it into the play field on this position which are set
+   * in the Block.
+   * block: block which shall insert into play field
+   */
+  void setBlockIntoField(Block block)
+  {
+    if(isValidCoords(block.getPos()))
+    {
+      _field[block.getPos().x][block.getPos().y] = block;
+    }
+  }
+
+  /**
    * Fetch Method for the Event Stream. This method is raised in this class
    * to created a Custom Event which are declared and defined in this Method and
    * in the eventType Enum.
+   * type: the eventType which are defined in eventType Enum
    */
   fetch(eventType type)
   {

@@ -1,0 +1,8 @@
+
+
+class GameKeyCommunicator
+{
+  //
+  GamekeyCommunicator() {}
+
+}

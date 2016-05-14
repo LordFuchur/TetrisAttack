@@ -158,23 +158,36 @@ class Playfield
   void _triggerDissolve()
   {
     _toDissolve = new List<Block>();
-
+    Point currentBlockPos;
     // trigger at every Block the dissolve methods
     for(int y = 0; y < _fieldY; y++)
     {
       for(int x = 0; x < _fieldX; x++)
       {
-        _field[y][x].checkNeighbour(_toDissolve);
+        _field[x][y].checkNeighbour(_toDissolve,this);
       }
     }
 
     // work off the dissolve list and add points to score
     for(Block b in _toDissolve)
     {
-      // TODO: set the right methods to get Points of the Combo, start as ASYNC METHOD
-      _currentScore += b.getDissolveCounter();
-    }
+      currentBlockPos = b.getPos();
+      _field[currentBlockPos.x][currentBlockPos.y] = null;
 
+      // check if the block exist (could be that block are member of two combos)
+      if(_field[currentBlockPos.x][currentBlockPos.y] != null)
+      {
+        // set all Blocks over current Block falling
+        for(int y = currentBlockPos.y; y < _fieldY; y++)
+        {
+          _field[currentBlockPos.x][y].setFalling(true);
+        }
+
+        // add Points to Score
+        _currentScore += b.getDissolveCounter();
+
+      }
+    }
     _toDissolve = null;
 
     throw new Exception("not tested yet");
@@ -193,5 +206,8 @@ class Playfield
     throw new Exception("not implemented yet");
   }
 
-
+  Block getBlockFromField(Point coord)
+  {
+    return _field[coord.x][coord.y];
+  }
 }

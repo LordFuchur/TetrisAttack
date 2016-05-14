@@ -59,7 +59,9 @@ class Block
     //first check left & right
     if(playfield.isValidCoords(new Point(_Pos.x - 1,_Pos.y)) &&
                                playfield.isValidCoords(new Point(_Pos.x + 1,_Pos.y)) &&
-                               playfield.getBlockFromField(new Point(_Pos.x -1,_Pos.y))._color == playfield.getBlockFromField(new Point(_Pos.x+1,_Pos.y))._color)
+                               !playfield.getBlockFromField(new Point(_Pos.x - 1,_Pos.y)).isLocked() &&
+                               !playfield.getBlockFromField(new Point(_Pos.x + 1,_Pos.y)).isLocked() &&
+                               playfield.getBlockFromField(new Point(_Pos.x - 1,_Pos.y))._color == playfield.getBlockFromField(new Point(_Pos.x+1,_Pos.y))._color)
     {
       dissolveList.add(this);
       dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x - 1,_Pos.y)));
@@ -68,6 +70,8 @@ class Block
 
     if(playfield.isValidCoords(new Point(_Pos.x,_Pos.y - 1)) &&
         playfield.isValidCoords(new Point(_Pos.x,_Pos.y + 1)) &&
+        !playfield.getBlockFromField(new Point(_Pos.x,_Pos.y - 1)).isLocked() &&
+        !playfield.getBlockFromField(new Point(_Pos.x,_Pos.y + 1)).isLocked() &&
         playfield.getBlockFromField(new Point(_Pos.x,_Pos.y - 1))._color == playfield.getBlockFromField(new Point(_Pos.x,_Pos.y+1))._color)
     {
       dissolveList.add(this);

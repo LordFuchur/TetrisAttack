@@ -9,7 +9,8 @@ import "Cursor.dart";
 enum eventType
 {
   Win,
-  GameOver
+  GameOver,
+  Loaded
 }
 
 
@@ -64,7 +65,8 @@ class Playfield
       }
     }
 
-
+    // Raise Event that the Field is ready
+    fetch(eventType.Loaded);
   }
 
   /**
@@ -153,7 +155,7 @@ class Playfield
    * Triggered periodic by a Timer from the Controller, and increase
    * the Level Time and check for Win or Game Over
    */
-  void increaseLevelTime()
+  void timerIncreaseLevelTime()
   {
     // Count the Level Time up
     _currentLevelTime++;
@@ -375,6 +377,9 @@ class Playfield
 
       case eventType.Win:
         _eventController.add(eventType.Win);
+        break;
+      case eventType.Loaded:
+        _eventController.add(eventType.Loaded);
         break;
     }
   }

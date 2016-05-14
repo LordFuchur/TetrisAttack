@@ -27,6 +27,10 @@ class Block
     //throw new Exception("not implemented yet");
     return _isFalling;
   }
+  void seFalling(bool value)
+  {
+    this._isFalling = value;
+  }
   int getDissolveCounter()
   {
     return this._dissolveCounter;
@@ -38,7 +42,8 @@ class Block
   }
   void checkNeighbour(List<Block> dissolveList,Playfield playfield)
   {
-    if(playfield.i)
+    //first check left & right
+    if(playfield.isValidCoords(new Point(_Pos.x -1,_Pos.y) && playfield)
     //throw new Exception("not implemented yet");
   }
   void setPos(Point pos)

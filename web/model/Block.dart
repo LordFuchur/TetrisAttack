@@ -27,7 +27,7 @@ class Block
     //throw new Exception("not implemented yet");
     return _isFalling;
   }
-  void seFalling(bool value)
+  void setFalling(bool value)
   {
     this._isFalling = value;
   }

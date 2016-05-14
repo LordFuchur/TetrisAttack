@@ -1,5 +1,6 @@
 import "dart:math";
 import "Playfield.dart";
+import "Block.dart";
 
 enum Direction
 {
@@ -13,6 +14,7 @@ class Cursor
   Point<int> _cursor1;
   Point<int> _cursor2;
   Playfield playfield;
+
   Cursor(Point<int> cursor1, Point<int> cursor2, Playfield field)
   {
     this._cursor1 = cursor1;
@@ -65,8 +67,16 @@ class Cursor
   }
   void swap()
   {
-    Point<int> temp = new Point(_cursor1.x, _cursor1.y);
-    _cursor1 = new Point(_cursor2.x, _cursor2.y);
-    _cursor2 = new Point(temp.x, temp.y);
+    Block fCursor01;
+    Block fCursor02;
+    // switch Positions inside the Blocks
+    fCursor01 = playfield.getBlockFromField(_cursor1);
+    fCursor01.setPos(_cursor2);
+    fCursor02 = playfield.getBlockFromField(_cursor2);
+    fCursor02.setPos(_cursor1);
+    // set into the Field from Cursor 01
+    playfield.setBlockIntoField(fCursor01);
+    // set into the Field from Cursor 02
+    playfield.setBlockIntoField(fCursor02);
   }
 }

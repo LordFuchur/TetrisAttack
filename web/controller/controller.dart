@@ -6,7 +6,7 @@ import "Config.dart";
 import "../model/Command.dart";
 import "../model/Playfield.dart";
 import "../model/Level.dart";
-import "../View/View.dart" as TestView;
+import "../View/View.dart";
 
 enum Platformtype
 {
@@ -23,7 +23,7 @@ class controller
 
   Playfield _currentField;
 
-  TestView.view _view;
+  View _view;
 
   GameKeyCommunicator _gamekey;
 
@@ -81,7 +81,7 @@ class controller
 
     // Create View and GameKeyCom
     _gamekey = new GameKeyCommunicator();
-    _view = new TestView.view();
+    _view = new View(devicePlatform);
 
     print("Controller Constructor #2");
 
@@ -91,7 +91,6 @@ class controller
 
     // Load Config and Level Files
 
-    print("Controller Constructor #3");
     //throw new Exception("not implemented yet");
   }
 
@@ -132,6 +131,9 @@ class controller
     }
   }
 
+  /**
+   * TODO: Need to be changed. Load from GameKey Server
+   */
   bool loadConfig()
   {
     // Load Config
@@ -142,6 +144,9 @@ class controller
     return false;
   }
 
+  /**
+   * TODO: Need to be changed. Load from GameKey Server
+   */
   bool loadLevels()
   {
     /**

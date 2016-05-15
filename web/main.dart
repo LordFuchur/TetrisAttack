@@ -5,12 +5,11 @@ import 'dart:html';
 
 void main()
 {
-  ButtonElement test = querySelector('testButton');
-  test.onMouseDown.listen(testMethod);
+  querySelector('#testButton').onClick.listen(testMethod);
 }
 void testMethod(MouseEvent args)
 {
-  Element textElem = querySelector('#output');
-  textElem.setInnerHtml("TetrisAttack\'n Stuff.");
-  print("called method");
+  querySelector('#output').text="TetrisAttack\'n Stuff.";
+  TableCellElement elem = querySelector('#tableEntry');
+  elem.style.backgroundColor = "black";
 }

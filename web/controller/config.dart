@@ -4,8 +4,8 @@ class config
 {
   static int dimBlockX = 4;
   static int dimBlockY = 4;
-  static int fieldX = 24;
-  static int fieldY = 48;
+  static int fieldX = 8;
+  static int fieldY = 12;
   static List<String> colors = ['red','green','blue','yellow'];
   static Point cursor01 = new Point(0,0);
   static Point cursor02 = new Point(1,0);

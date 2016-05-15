@@ -7,7 +7,6 @@ html, body {
     padding: 0;
     font-family: 'Roboto', sans-serif;
 }
-
 body
 {
     background-color: darkgrey;
@@ -21,17 +20,7 @@ td
     padding: 1px;
     border-collapse: collapse;
 }
-#test
-{
-    background-color:yellow;
-    height:20px;
-    width:20px;
-    border: 1px solid black;
-    padding: 1px;
-    border-collapse: collapse;
-}
-
-span.menu
+button.menu
 {
     color: orange;
     margin-top: 10px;
@@ -39,5 +28,28 @@ span.menu
     background-color: dimgray;
     border: solid;
     border-color: black;
-
 }
+div.gameArea
+{
+    float:left;
+    border:2px solid blue;
+    height:80%;
+    width:57%;
+}
+div.debugDiv
+{
+    border:2px solid black;
+    height:80%;
+    width:40%;
+    position:absolute;
+    right:10px
+}
+textarea.debugTextBox
+{
+    margin:5px;
+    height:95%;
+    width:95%;
+}
+
+
+

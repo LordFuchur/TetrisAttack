@@ -2,6 +2,8 @@ import "dart:html";
 import "../model/Playfield.dart";
 class view
 {
+  final messageOverlay = querySelector("#svensTag");
+
   Playfield _playfieldRef;
   int _playFieldWidth;
   int _playFieldHeight;
@@ -31,5 +33,10 @@ class view
   {
     //let the offset circle around (0;divisionValue)
     _offset = ++_offset % _division;
+  }
+
+  void printMessage(String msg)
+  {
+    document.querySelector('svensTag').innerHtml = msg;
   }
 }

@@ -13,23 +13,26 @@
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
     <title>Tetris-Attack</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="main.dart" type="application/dart"></script>
-    <script defer src="packages/browser/dart.js"></script>
+    <!--<script defer src="main.dart" type="application/dart"></script>
+    <script defer src="packages/browser/dart.js"></script>-->
 </head>
 
 <body>
-    <div id="gameArea">
+<div id="gameArea" class="gameArea">
+    <div id="field" class ="hauptfeld">
+        Hauptfeld
+        <table id = "gameplayField">
 
-        <div id="field"></div>
-
-        <div id="Menu">
-                <span id="startButtonArea" class="menu">Start</span>
-                <span id="highscoreButtonArea" class="menu">Highscores</span>
-        </div>
-
-        <div id="DebugConsole">
-            <h1 id="consoleHeader">Debug Console</h1>
-        </div>
+        </table>
     </div>
+</div>
+
+
+<div id="debugBox" class= "debugDiv">
+    <span id="consoleHeader">Debug Console</span>
+
+    <textarea id ="debugTextBox" class = "debugTextBox"></textarea>
+</div>
 </body>
 </html>
+

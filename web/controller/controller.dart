@@ -103,7 +103,7 @@ class controller
   void newGame()
   {
     // create new play field with specific setting
-    _currentField = new Playfield(config.fieldX,config.fieldY,config.cursor01,config.cursor02,null);
+    _currentField = new Playfield(config.modelFieldX,config.modelFieldY,config.cursor01,config.cursor02,null);
     // enable Events of the play field
     _currentField.allEvents.listen((e) => eventHandler(e));
 

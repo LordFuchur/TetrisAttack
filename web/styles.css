@@ -53,8 +53,18 @@ textarea.debugTextBox
 
 td.tableCell
 {
-    width: 5px;
-    height:5px;
+    width: 12px;
+    height:12px;
+    margin: 0;
+    padding: 0;
+
+}
+
+table.gameplayField
+{
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
 }
 
 div.Menu

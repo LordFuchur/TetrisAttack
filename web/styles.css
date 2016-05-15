@@ -8,6 +8,10 @@ html, body {
     font-family: 'Roboto', sans-serif;
 }
 
+body
+{
+    background-color: darkgrey;
+}
 td
 {
     /*background-color:yellow;*/

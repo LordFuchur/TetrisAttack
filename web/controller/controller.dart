@@ -8,6 +8,7 @@ import "../model/Level.dart";
 import "view.dart";
 import "GameKeyCommunicator.dart";
 import "Config.dart";
+import "../View/ViewTest.dart" as TestView;
 
 class controller
 {
@@ -17,7 +18,7 @@ class controller
 
   Playfield _currentField;
 
-  View _view;
+  TestView.view _view;
 
   GameKeyCommunicator _gamekey;
 
@@ -71,7 +72,7 @@ class controller
   {
     // Create View and GameKeyCom
     _gamekey = new GameKeyCommunicator();
-    _view = new View();
+    _view = new TestView.view(10,10,4);
 
     // GameKey Connection
 
@@ -256,8 +257,8 @@ class controller
    */
   void gameOver()
   {
-    print("Test Button");
-    throw new Exception("not implemented yet");
+    _view.printMessage("Test Bottom Click");
+    //throw new Exception("not implemented yet");
   }
 
   /**

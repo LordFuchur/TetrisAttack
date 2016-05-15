@@ -1,7 +1,7 @@
 import "dart:html";
 import "../model/Playfield.dart";
 import "../controller/controller.dart";
-import "../controller/Config.dart";
+import "../controller/config.dart";
 class View
 {
   /**
@@ -61,7 +61,10 @@ class View
       }
       tableString += "</tr>\n";
     }
+
     gameplayTable.setInnerHtml(tableString);
+    querySelector("#3:3").setAttribute("class","cursor");
+    querySelector("#4:3").setAttribute("class","cursor");
   }
 
   void showScore(List<String> scoreList)

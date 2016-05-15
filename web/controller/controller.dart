@@ -2,7 +2,7 @@ import 'dart:html';
 import 'dart:convert';
 import 'dart:async';
 import "GameKeyCommunicator.dart";
-import "Config.dart";
+import "config.dart";
 import "../model/Command.dart";
 import "../model/Playfield.dart";
 import "../model/Level.dart";
@@ -87,7 +87,8 @@ class controller
 
     _view.printMessage("blub");
     _view.generateField();
-
+    newGame();
+    _view.update(_currentField);
     // GameKey Connection
 
     // Load Config and Level Files

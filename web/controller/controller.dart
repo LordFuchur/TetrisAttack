@@ -76,17 +76,7 @@ class controller
 
     print("Controller Constructor #2");
 
-    // listen to the Button of the View
-    _view.StartButton.onClick.listen( (MouseEvent mv)
-    {
-      gameOver();
-    });
 
-
-    window.onKeyDown.listen( (KeyboardEvent ev)
-    {
-      gameOver();
-    });
 
     // GameKey Connection
 

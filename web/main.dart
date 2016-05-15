@@ -3,7 +3,6 @@
 
 import "controller/controller.dart";
 
-
 void main()
 {
   print("main");

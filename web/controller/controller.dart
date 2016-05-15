@@ -85,6 +85,7 @@ class controller
 
     print("Controller Constructor #2");
 
+    _view.printMessage("blub");
     _view.generateField();
 
     // GameKey Connection

@@ -12,7 +12,7 @@ class View
    * #####################################################################################
    */
 
-  final debugOverlay = querySelector('#DebugConsole');
+  final debugOverlay = querySelector('#debugTextBox');
 
   final debugHeader = querySelector('#DebugHeader');
 
@@ -45,13 +45,13 @@ class View
 
   void generateField()
   {
-    String tableString;
+    String tableString = "";
     for (int y = config.getFieldSizeY();y>0;y--)
     {
       tableString += "<tr>";
       for (int x = 0;x<config.getFieldSizeX();x++)
       {
-        tableString += "<td></td>";
+        tableString += '<td class="tableCell"></td>';
       }
       tableString += "</tr>\n";
     }
@@ -60,7 +60,7 @@ class View
 
   void printMessage(String msg)
   {
-    debugOverlay.appendHtml(msg + "<hr><br>");
+    debugOverlay.appendText(msg + "\n");
   }
 
 }

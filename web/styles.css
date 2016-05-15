@@ -51,6 +51,12 @@ textarea.debugTextBox
     width:95%;
 }
 
+td.tableCell
+{
+    width: 5px;
+    height:5px;
+}
+
 div.Menu
 {
 

@@ -2,15 +2,15 @@
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:html' ;
-
+import "controller/controller.dart";
 void main()
 {
+  querySelector('#startButton').onClick.listen(testMethod);
+  DivElement elem = querySelector('#svensTag');
 
-  querySelector('#testButton').onClick.listen(testMethod);
 }
 void testMethod(MouseEvent args)
 {
-  querySelector('#output').text="TetrisAttack\'n Stuff.";
-  TableCellElement elem = querySelector('#tableEntry');
-  elem.style.backgroundColor = "black";
+  controller testcontrol = new controller();
+  testcontrol.gameOver();
 }

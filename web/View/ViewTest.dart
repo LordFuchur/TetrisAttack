@@ -13,8 +13,6 @@ class view
   {
     _offset = 0;
   }
-
-
   void showMenu()
   {
 
@@ -37,6 +35,6 @@ class view
 
   void printMessage(String msg)
   {
-    document.querySelector('svensTag').innerHtml = msg;
+    document.querySelector('#svensTag').appendHtml("<h1>TestHeader</h1>");
   }
 }

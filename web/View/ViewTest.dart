@@ -2,39 +2,47 @@ import "dart:html";
 import "../model/Playfield.dart";
 class view
 {
-  final messageOverlay = querySelector("#svensTag");
+  /**
+   * #####################################################################################
+   *
+   * Query Selectors
+   *
+   * #####################################################################################
+   */
 
-  Playfield _playfieldRef;
-  int _playFieldWidth;
-  int _playFieldHeight;
-  int _division;
-  int _offset;
-  view(this._playFieldHeight,this._playFieldWidth,this._division)
-  {
-    _offset = 0;
-  }
-  void showMenu()
+  final debugOverlay = querySelector('#DebugConsole');
+
+  final debugHeader = querySelector('#DebugHeader');
+
+  HtmlElement get StartButton => querySelector('#startButtonArea');
+
+
+  /**
+   * #####################################################################################
+   *
+   * Code below
+   *
+   * #####################################################################################
+   */
+
+  void update(Playfield model)
   {
 
   }
-  void showScore()
-  {
-    //TODO print the highscore (only accesible from the mainMenu)
-  }
-  void updateModel(Playfield model)
-  {
-    _playfieldRef = model;
 
-    //TODO print out the rest of the website...
-  }
-  void incOffset()
+  void showScore(List<String> scoreList)
   {
-    //let the offset circle around (0;divisionValue)
-    _offset = ++_offset % _division;
+
+  }
+
+  void generateField()
+  {
+
   }
 
   void printMessage(String msg)
   {
-    document.querySelector('#svensTag').appendHtml("<h1>TestHeader</h1>");
+    debugOverlay.appendHtml(msg + "<hr><br>");
   }
+
 }

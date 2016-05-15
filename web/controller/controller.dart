@@ -8,6 +8,13 @@ import "../model/Playfield.dart";
 import "../model/Level.dart";
 import "../View/ViewTest.dart" as TestView;
 
+enum Platform
+{
+  Computer,
+  Phone
+}
+
+
 class controller
 {
   /**
@@ -53,7 +60,7 @@ class controller
 
   bool isGameRunning = false;
   bool isPaused = false;
-
+  Platform devicePlatform;
   /**
    * #####################################################################################
    *
@@ -69,6 +76,8 @@ class controller
   controller()
   {
     print("Controller Constructor #1");
+
+    devicePlatform = detectDevice();
 
     // Create View and GameKeyCom
     _gamekey = new GameKeyCommunicator();
@@ -91,7 +100,6 @@ class controller
    * Create a new Playfield with the data from the config
    */
 
-  /*
   void newGame()
   {
     // create new play field with specific setting
@@ -102,9 +110,27 @@ class controller
     throw new Exception("not tested yet");
   }
 
-  */
-
-  /*
+  /**
+   * Method to detect the most different platforms, and sort it in two category's (Phone and Computer)
+   * return: Platform
+   */
+  Platform detectDevice()
+  {
+    String device = window.navigator.platform;
+    device = device.toLowerCase();
+    if(device.contains("arm") || device.contains("iphone") || device.contains("android") || device.contains("aarch64") || device.contains("ipod"))
+    {
+      return Platform.Phone;
+    }
+    else if(device.contains("win") || device.contains("i686") || device.contains("mac") || device.contains("sunos") || device.contains("x86_64") || device.contains("x11"))
+    {
+      return Platform.Computer;
+    }
+    else
+    {
+      return Platform.Computer;
+    }
+  }
 
   bool loadConfig()
   {
@@ -176,7 +202,6 @@ class controller
     }
   }
 
-  */
   /**
    * #####################################################################################
    *
@@ -189,7 +214,6 @@ class controller
    * Keyboard Event Methods (One Time Use)
    */
 
-  /*
   void controlEvents()
   {
     window.onKeyDown.listen((KeyboardEvent ev)
@@ -229,14 +253,11 @@ class controller
 
     throw new Exception("not tested yet");
   }
-  */
 
   /**
    * Event handler for the Events from the play field (model)
    * event: eventType entry from Enum located by the play field
    */
-
-  /*
 
   void eventHandler(eventType event)
   {
@@ -269,8 +290,6 @@ class controller
     throw new Exception("not tested yet");
   }
 
-  */
-
   /**
    * Called by Event handler after a Game Over was recognized
    */
@@ -280,10 +299,6 @@ class controller
   {
     print("Game Over #1");
 
-    _view.debugOverlay.appendHtml("<h2>blub</h2>");
-
-    _view.printMessage("Test Fehler 1");
-    _view.printMessage("Test Fehler 2");
 
     //throw new Exception("not implemented yet");
   }
@@ -292,10 +307,11 @@ class controller
    * Called by Event handler after the Level was successful ended
    */
 
-  /*
+
   void win()
   {
-    throw new Exception("not implemented yet");
+    print("Win Level #1");
+
+    //throw new Exception("not implemented yet");
   }
- */
 }

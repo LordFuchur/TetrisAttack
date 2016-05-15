@@ -53,10 +53,11 @@ textarea.debugTextBox
 
 div.Menu
 {
+
     width: 480px;
     height: 250px;
     background-color: gray;
-    opacity: 1.0;
+    opacity: 0.0;
     background-image: url(Ressources/menu.png);
     border: solid;
     border-color: gray;

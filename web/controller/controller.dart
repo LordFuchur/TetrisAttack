@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:math';
 import "../model/Command.dart";
 import "../model/Playfield.dart";
+import "../model/Level.dart";
 import "view.dart";
 import "GameKeyCommunicator.dart";
 import "Config.dart";
@@ -94,6 +95,76 @@ class controller
   }
 
 
+  bool loadConfig()
+  {
+    // Load Config
+    //TODO: add String of the JSON
+    Map jsonConfig = JSON.decode("String of the JSOn");
+
+
+    return false;
+  }
+
+  bool loadLevels()
+  {
+    /**
+     * jsonLevels = map list<level>
+     * Example JSON Levels:
+     * {
+     *  "_levels": [ [_level], [_level], [_level], ...
+     *  ]
+     * }
+     * Example JSON Level:
+     * {
+     *  "_levelNum: 1,
+     *  "_colors": ["red", ...],
+     *  "_blocks": ["normalBlock", ..],
+     *  ...
+     *  "_startField":[ [{"_color":"red","x":0,"y":0},{"_color":"red","x":1,"y":0},{"_color":"red","x":2,"y":0}],
+     *                  [{"_color":"red","x":0,"y":1},{"_color":"red","x":1,"y":1},{"_color":"red","x":2,"y":1}],
+     *                  ...
+     *  ]
+     * }
+     */
+
+    // Load Levels
+    try
+    {
+      // Fetch levels.json
+      Map jsonLevels = JSON.decode("String of the Level JSON");
+      // Variables
+      List<Level> allLevels = new List<Level>();
+      List<String> lvls;
+      Map level;
+      // add every Level in Levels to List
+      lvls.add(jsonLevels["_levels"]);
+      // for each Level String convert into Level class
+      for(String lvl in lvls)
+      {
+        level = JSON.decode(lvl);
+        allLevels.add( new Level(
+            level["_colors"],
+            level["_blocks"],
+            Level.convertStartfieldMapToStartField(level["_startField"]),
+            level["_levelTimeSec"],
+            level["_comboHoldTime"],
+            level["_requiredScore"],
+            level["_levelNum"])
+        );
+      }
+      // set into Config
+      //TODO: Override Config / Insert Level in Config
+
+
+      return true;
+    }
+    catch(error)
+    {
+
+      return false;
+    }
+  }
+
   /**
    * #####################################################################################
    *
@@ -133,7 +204,7 @@ class controller
         case KeyCode.P:
           // toggle pause
           isPaused = !isPaused;
-          // Stop the Timers if the game are running, or create new Timer to resume the game
+          // Stop the Timers if the game is running, or create new Timer to resume the game
           (isPaused) ? timerFieldAction.cancel() : timerFieldAction = new Timer.periodic(timerFieldActionDuration,(_) => _currentField.timerDoNextAction());
           (isPaused) ? timerPlaytime.cancel() : timerFieldAction = new Timer.periodic(timerPlaytimeDuration,(_) => _currentField.timerIncreaseLevelTime());
           (isPaused) ? timerFieldUp.cancel() : timerFieldAction = new Timer.periodic(timerFieldUpDuration,(_) => _currentField.timerFieldUp());
@@ -185,6 +256,7 @@ class controller
    */
   void gameOver()
   {
+    print("Test Button");
     throw new Exception("not implemented yet");
   }
 

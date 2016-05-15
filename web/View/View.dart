@@ -51,17 +51,21 @@ class View
   {
     String tableString = "";
 
+    printMessage("pre for loop");
     for (int y = config.modelFieldY; y > 0; y--)
     {
       tableString += "<tr>";
       for (int x = 0; x < config.modelFieldX; x++)
       {
-        model.getBlockFromField(new Point(x,y)).getColor();
-        tableString += '<td id="' + x.toString() + ':'+ y.toString() + '" bgcolor="' + model.getBlockFromField(new Point(x,y)).getColor() + '" class="tableCell"></td>';
+        printMessage("printing Block :"+x.toString() + "/"+y.toString());
+        var temp = model.getBlockFromField(new Point(x,y));
+        printMessage("after var fetch");
+        tableString += '<td id="' + x.toString() + ':'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
       }
       tableString += "</tr>\n";
     }
 
+    printMessage("After create/before queryselector");
     gameplayTable.setInnerHtml(tableString);
     querySelector("#3:3").setAttribute("class","cursor");
     querySelector("#4:3").setAttribute("class","cursor");

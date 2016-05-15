@@ -108,7 +108,7 @@ class controller
     // enable Events of the play field
     _currentField.allEvents.listen((e) => eventHandler(e));
 
-    throw new Exception("not tested yet");
+    //throw new Exception("not tested yet");
   }
 
   /**
@@ -258,7 +258,6 @@ class controller
       }
     });
 
-    throw new Exception("not tested yet");
   }
 
   /**
@@ -294,7 +293,7 @@ class controller
         break;
     }
 
-    throw new Exception("not tested yet");
+
   }
 
   /**

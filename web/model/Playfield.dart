@@ -76,7 +76,7 @@ class Playfield
   void addCommand(Command cmd)
   {
     _actionQueue.add(cmd);
-    throw new Exception("not tested yet");
+
   }
 
   /**
@@ -114,7 +114,7 @@ class Playfield
     //trigger gravity
     timerApplyGravity();
 
-    throw new Exception("not tested yet");
+
   }
 
   /**
@@ -148,7 +148,7 @@ class Playfield
       }
     }
 
-    throw new Exception("not tested yet");
+
   }
 
   /**
@@ -176,7 +176,6 @@ class Playfield
       }
     }
 
-    throw new Exception("not tested yet");
   }
 
   /**
@@ -247,8 +246,6 @@ class Playfield
     ((coordinate.x >= 0 + unusableRows) && (coordinate.x < _fieldX)) ? valid = true : valid = false;
     ((coordinate.y >= 0 + unusableRows) && (coordinate.y < _fieldY)) ? valid = true : valid = false;
 
-    throw new Exception("not tested yet");
-
     return valid;
   }
 
@@ -292,7 +289,7 @@ class Playfield
     }
     _toDissolve = null;
 
-    throw new Exception("not tested yet");
+
   }
 
   /**
@@ -334,7 +331,7 @@ class Playfield
 
     } // end for loop
 
-    throw new Exception("not tested yet");
+
   }
 
   /**

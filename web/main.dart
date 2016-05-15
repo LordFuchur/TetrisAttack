@@ -5,5 +5,12 @@ import 'dart:html';
 
 void main()
 {
-  querySelector('#output').text = 'TetrisAttack\'n Stuff.';
+  ButtonElement test = querySelector('testButton');
+  test.onMouseDown.listen(testMethod);
+}
+void testMethod(MouseEvent args)
+{
+  Element textElem = querySelector('#output');
+  textElem.setInnerHtml("TetrisAttack\'n Stuff.");
+  print("called method");
 }

@@ -90,5 +90,12 @@ class Block
     //throw new Exception("not implemented yet");
     return this._Pos;
   }
-
+  Map convertBlock()
+  {
+    Map retMap = new Map();
+    retMap["_color"] = _color;
+    retMap ["_PosX"] = _Pos.x;
+    retMap ["_PosY"] = _Pos.y;
+    return retMap;
+  }
 }

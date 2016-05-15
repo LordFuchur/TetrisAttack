@@ -5,5 +5,11 @@ import 'dart:html';
 
 void main()
 {
-  querySelector('#output').text = 'TetrisAttack\'n Stuff.';
+  querySelector('#testButton').onClick.listen(testMethod);
+}
+void testMethod(MouseEvent args)
+{
+  querySelector('#output').text="TetrisAttack\'n Stuff.";
+  TableCellElement elem = querySelector('#tableEntry');
+  elem.style.backgroundColor = "black";
 }

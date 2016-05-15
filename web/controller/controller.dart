@@ -1,13 +1,11 @@
 import 'dart:html';
 import 'dart:convert';
 import 'dart:async';
-import 'dart:math';
+import "GameKeyCommunicator.dart";
+import "Config.dart";
 import "../model/Command.dart";
 import "../model/Playfield.dart";
 import "../model/Level.dart";
-import "view.dart";
-import "GameKeyCommunicator.dart";
-import "Config.dart";
 import "../View/ViewTest.dart" as TestView;
 
 class controller
@@ -68,23 +66,42 @@ class controller
    * Constructor
    */
 
-  Controller()
+  controller()
   {
+    print("Controller Constructor #1");
+
     // Create View and GameKeyCom
     _gamekey = new GameKeyCommunicator();
-    _view = new TestView.view(10,10,4);
+    _view = new TestView.view();
+
+    print("Controller Constructor #2");
+
+    // listen to the Button of the View
+    _view.StartButton.onClick.listen( (MouseEvent mv)
+    {
+      gameOver();
+    });
+
+
+    window.onKeyDown.listen( (KeyboardEvent ev)
+    {
+      gameOver();
+    });
 
     // GameKey Connection
 
     // Load Config and Level Files
 
-    throw new Exception("not implemented yet");
+    print("Controller Constructor #3");
+    //throw new Exception("not implemented yet");
   }
 
   /**
    * Start a new Game.
    * Create a new Playfield with the data from the config
    */
+
+  /*
   void newGame()
   {
     // create new play field with specific setting
@@ -95,6 +112,9 @@ class controller
     throw new Exception("not tested yet");
   }
 
+  */
+
+  /*
 
   bool loadConfig()
   {
@@ -166,6 +186,7 @@ class controller
     }
   }
 
+  */
   /**
    * #####################################################################################
    *
@@ -177,6 +198,8 @@ class controller
   /**
    * Keyboard Event Methods (One Time Use)
    */
+
+  /*
   void controlEvents()
   {
     window.onKeyDown.listen((KeyboardEvent ev)
@@ -216,11 +239,15 @@ class controller
 
     throw new Exception("not tested yet");
   }
+  */
 
   /**
    * Event handler for the Events from the play field (model)
    * event: eventType entry from Enum located by the play field
    */
+
+  /*
+
   void eventHandler(eventType event)
   {
     // choose action for each eventType
@@ -252,20 +279,33 @@ class controller
     throw new Exception("not tested yet");
   }
 
+  */
+
   /**
    * Called by Event handler after a Game Over was recognized
    */
+
+
   void gameOver()
   {
-    _view.printMessage("Test Bottom Click");
+    print("Game Over #1");
+
+    _view.debugOverlay.appendHtml("<h2>blub</h2>");
+
+    _view.printMessage("Test Fehler 1");
+    _view.printMessage("Test Fehler 2");
+
     //throw new Exception("not implemented yet");
   }
 
   /**
    * Called by Event handler after the Level was successful ended
    */
+
+  /*
   void win()
   {
     throw new Exception("not implemented yet");
   }
+ */
 }

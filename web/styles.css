@@ -30,3 +30,14 @@ td
     padding: 1px;
     border-collapse: collapse;
 }
+
+span.menu
+{
+    color: orange;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: dimgray;
+    border: solid;
+    border-color: black;
+
+}

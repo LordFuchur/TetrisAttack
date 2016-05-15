@@ -60,6 +60,11 @@ class Level
     return _requiredScore;
   }
 
+  int getLevelNumber()
+  {
+    return _levelNum;
+  }
+
   /**
    * #####################################################################################
    *

@@ -21,7 +21,7 @@ class Playfield
   Queue<Command> _actionQueue = new Queue<Command>();
   StreamController _eventController = new StreamController.broadcast();
 
-  double _currentScore;
+  int _currentScore;
   int _currentLevelTime; // in seconds
   List<Block> _toDissolve;
   int _fieldX;
@@ -389,4 +389,30 @@ class Playfield
    */
   Stream get allEvents => _eventController.stream;
 
+  /**
+   * Get which time is left for this level
+   * return: int (seconds)
+   */
+  int getTimeleft()
+  {
+    return _level.getLevelTime() - _currentLevelTime;
+  }
+
+  /**
+   * Get the current Score
+   * return: int
+   */
+  int getCurrentScore()
+  {
+    return _currentScore;
+  }
+
+  /**
+   * Return the Number of the Level
+   * return: int
+   */
+  int getCurrentLevelNumber()
+  {
+    return _level.getLevelNumber();
+  }
 }

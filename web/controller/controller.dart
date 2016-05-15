@@ -6,9 +6,9 @@ import "Config.dart";
 import "../model/Command.dart";
 import "../model/Playfield.dart";
 import "../model/Level.dart";
-import "../View/ViewTest.dart" as TestView;
+import "../View/View.dart" as TestView;
 
-enum Platform
+enum Platformtype
 {
   Computer,
   Phone
@@ -60,7 +60,7 @@ class controller
 
   bool isGameRunning = false;
   bool isPaused = false;
-  Platform devicePlatform;
+  Platformtype devicePlatform;
   /**
    * #####################################################################################
    *
@@ -114,21 +114,21 @@ class controller
    * Method to detect the most different platforms, and sort it in two category's (Phone and Computer)
    * return: Platform
    */
-  Platform detectDevice()
+  Platformtype detectDevice()
   {
     String device = window.navigator.platform;
     device = device.toLowerCase();
     if(device.contains("arm") || device.contains("iphone") || device.contains("android") || device.contains("aarch64") || device.contains("ipod"))
     {
-      return Platform.Phone;
+      return Platformtype.Phone;
     }
     else if(device.contains("win") || device.contains("i686") || device.contains("mac") || device.contains("sunos") || device.contains("x86_64") || device.contains("x11"))
     {
-      return Platform.Computer;
+      return Platformtype.Computer;
     }
     else
     {
-      return Platform.Computer;
+      return Platformtype.Computer;
     }
   }
 

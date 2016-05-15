@@ -1,6 +1,7 @@
 import "dart:html";
 import "../model/Playfield.dart";
-class view
+import "../controller/controller.dart";
+class View
 {
   /**
    * #####################################################################################
@@ -16,7 +17,7 @@ class view
 
   HtmlElement get StartButton => querySelector('#startButtonArea');
 
-
+  Platformtype platform;
   /**
    * #####################################################################################
    *
@@ -25,6 +26,10 @@ class view
    * #####################################################################################
    */
 
+  View(this.platform)
+  {
+
+  }
   void update(Playfield model)
   {
 

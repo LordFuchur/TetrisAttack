@@ -97,6 +97,8 @@ class controller
     newGame();
 
     _view.update(_currentField);
+
+    controlEvents();
     // GameKey Connection
 
     // Load Config and Level Files
@@ -314,8 +316,6 @@ class controller
         isGameRunning = true;
         break;
     }
-
-
   }
 
   /**
@@ -326,9 +326,6 @@ class controller
   void gameOver()
   {
     print("Game Over #1");
-
-
-    //throw new Exception("not implemented yet");
   }
 
   /**
@@ -339,7 +336,5 @@ class controller
   void win()
   {
     print("Win Level #1");
-
-    //throw new Exception("not implemented yet");
   }
 }

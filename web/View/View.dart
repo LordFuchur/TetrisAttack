@@ -61,15 +61,15 @@ class View
         printMessage("printing Block :"+x.toString() + ":" + y.toString());
         Block temp = model.getBlockFromField(new Point(x,y));
         printMessage("after var fetch");
-        tableString += '<td id="' + x.toString() + ':'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
+        tableString += '<td id="TD' + x.toString() + 'g'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
       }
       tableString += "</tr>\n";
     }
 
     printMessage("After create/before queryselector");
     gameplayTable.setInnerHtml(tableString);
-    querySelector("#3:3").setAttribute("class","cursor");
-    querySelector("#4:3").setAttribute("class","cursor");
+    querySelector("#TD3g3").setAttribute("class","cursor");
+    querySelector("#TD4g3").setAttribute("class","cursor");
   }
 
   void showScore(List<String> scoreList)

@@ -2,6 +2,7 @@ import "dart:html";
 import "../model/Playfield.dart";
 import "../controller/controller.dart";
 import "../controller/config.dart";
+import "../model/Block.dart";
 class View
 {
   /**
@@ -50,7 +51,6 @@ class View
   void update(Playfield model)
   {
     String tableString = "";
-    printMessage("update start");
 
     printMessage("pre for loop");
     for (int y = config.modelFieldY; y > 0; y--)
@@ -58,20 +58,18 @@ class View
       tableString += "<tr>";
       for (int x = 0; x < config.modelFieldX; x++)
       {
-        printMessage("printing Block :"+x.toString() + "/"+y.toString());
-        var temp = model.getBlockFromField(new Point(x,y));
+        printMessage("printing Block :"+x.toString() + ":" + y.toString());
+        Block temp = model.getBlockFromField(new Point(x,y));
         printMessage("after var fetch");
-        tableString += '<td id="' + x.toString() + ':'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
+        tableString += '<td id="TD' + x.toString() + 'g'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
       }
       tableString += "</tr>\n";
     }
 
     printMessage("After create/before queryselector");
     gameplayTable.setInnerHtml(tableString);
-    printMessage("update cursor");
-    querySelector("#3:3").setAttribute("class","cursor");
-    querySelector("#4:3").setAttribute("class","cursor");
-    printMessage("update cursor end");
+    querySelector("#TD3g3").setAttribute("class","cursor");
+    querySelector("#TD4g3").setAttribute("class","cursor");
   }
 
   void showScore(List<String> scoreList)

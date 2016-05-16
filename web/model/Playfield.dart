@@ -341,7 +341,9 @@ class Playfield
    */
   Block getBlockFromField(Point coord)
   {
-    return (isValidCoords(coord)) ? _field[coord.x][coord.y] : null;
+    if(!isValidCoords(coord))
+      return null;
+    return _field[coord.y][coord.x];
   }
 
   /**

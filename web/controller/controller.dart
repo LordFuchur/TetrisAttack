@@ -293,6 +293,10 @@ class controller
         case KeyCode.SPACE:
           _currentField.addCommand(new Command(Action.swap));
           break;
+          //for debugging
+        case KeyCode.N:
+          _currentField.addRow()
+          break;
         case KeyCode.P:
           // toggle pause
           isPaused = !isPaused;

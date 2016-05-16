@@ -94,21 +94,21 @@ class controller
     // Load Test Level
     loadLevels();
 
-    _view.printMessage("Mapped Level Constructor #2");
+    _view.printDebugMessage("Mapped Level Constructor #2");
 
     // enable Keyboard Events
     controlEvents();
 
-    _view.printMessage("Control Events done");
+    _view.printDebugMessage("Control Events done");
 
     // Start new Game
     newGame();
 
-    _view.printMessage("New Game done");
+    _view.printDebugMessage("New Game done");
 
     _view.update(_currentField);
 
-    _view.printMessage("update Field");
+    _view.printDebugMessage("update Field");
     // GameKey Connection
 
     // Load Config and Level Files
@@ -261,11 +261,11 @@ class controller
 
   void controlEvents()
   {
-    _view.printMessage("Test Control Events");
+    _view.printDebugMessage("Test Control Events");
 
     window.onKeyDown.listen((KeyboardEvent ev)
     {
-      _view.printMessage("Key Pushed " + ev.keyCode.toString());
+      _view.printDebugMessage("Key Pushed " + ev.keyCode.toString());
       // Escape from Event if no Game is running
       if(isGameRunning == false) return;
 
@@ -308,7 +308,7 @@ class controller
 
   void eventHandler(eventType event)
   {
-    _view.printMessage(event.toString());
+    _view.printDebugMessage(event.toString());
 
     // choose action for each eventType
     switch(event)

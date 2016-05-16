@@ -61,6 +61,10 @@ class controller
   bool isGameRunning = false;
   bool isPaused = false;
   Platformtype devicePlatform;
+
+  String testJson = '{"_levelNum": 1,"_colors":["#FF0000","#008000","#0000FF","#FFFF00"],"_blocks":["normalBlock"],"_levelTimeSec":120,"_comboHoldTime":2,"_requiredScore":1000,"_startField":[[{"_color":"red","x":0,"y":0},{"_color":"red","x":1,"y":0},{"_color":"red","x":2,"y":0}],[{"_color":"red","x":0,"y":1},{"_color":"red","x":1,"y":1},{"_color":"red","x":2,"y":1}],[{"_color":"red","x":0,"y":2},{"_color":"red","x":1,"y":2},{"_color":"red","x":2,"y":2}],[{"_color":"red","x":0,"y":3},{"_color":"red","x":1,"y":3},{"_color":"red","x":2,"y":3}]]}';
+  Level testLevel;
+
   /**
    * #####################################################################################
    *
@@ -87,7 +91,11 @@ class controller
 
     _view.printMessage("blub");
     _view.generateField();
+
+    loadLevels();
+
     newGame();
+
     _view.update(_currentField);
     // GameKey Connection
 
@@ -104,7 +112,7 @@ class controller
   void newGame()
   {
     // create new play field with specific setting
-    _currentField = new Playfield(config.modelFieldX,config.modelFieldY,config.cursor01,config.cursor02,null);
+    _currentField = new Playfield(config.modelFieldX,config.modelFieldY,config.cursor01,config.cursor02,testLevel);
     // enable Events of the play field
     _currentField.allEvents.listen((e) => eventHandler(e));
 
@@ -174,14 +182,15 @@ class controller
     // Load Levels
     try
     {
+      /*
       // Fetch levels.json
-      Map jsonLevels = JSON.decode("String of the Level JSON");
+      Map jsonLevels = JSON.decode(testJson);
       // Variables
       List<Level> allLevels = new List<Level>();
       List<String> lvls;
       Map level;
       // add every Level in Levels to List
-      lvls.add(jsonLevels["_levels"]);
+      lvls = jsonLevels["_levels"];
       // for each Level String convert into Level class
       for(String lvl in lvls)
       {
@@ -196,6 +205,21 @@ class controller
             level["_levelNum"])
         );
       }
+      */
+
+      Map level = JSON.decode(testJson);
+      List<List<Map>> mapField = level["_startField"];
+      testLevel = new Level(
+          level["_colors"],
+          level["_blocks"],
+          Level.convertStartfieldMapToStartField(mapField),
+          level["_levelTimeSec"],
+          level["_comboHoldTime"],
+          level["_requiredScore"],
+          level["_levelNum"]
+      );
+
+
       // set into Config
       //TODO: Override Config / Insert Level in Config
 

@@ -50,6 +50,7 @@ class View
   void update(Playfield model)
   {
     String tableString = "";
+    printMessage("update start");
 
     printMessage("pre for loop");
     for (int y = config.modelFieldY; y > 0; y--)
@@ -67,8 +68,10 @@ class View
 
     printMessage("After create/before queryselector");
     gameplayTable.setInnerHtml(tableString);
+    printMessage("update cursor");
     querySelector("#3:3").setAttribute("class","cursor");
     querySelector("#4:3").setAttribute("class","cursor");
+    printMessage("update cursor end");
   }
 
   void showScore(List<String> scoreList)

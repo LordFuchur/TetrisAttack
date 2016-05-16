@@ -321,7 +321,7 @@ class controller
         {
       case eventType.GameOver:
       // execute Game Over Method
-        gameOver();
+        //gameOver();
         // set Flag game running
         isGameRunning = false;
         break;
@@ -329,7 +329,7 @@ class controller
       // execute Win Method
         win();
         // set Flag game running
-        isGameRunning = false;
+        //isGameRunning = false;
         break;
       case eventType.Loaded:
       // Create Timers etc.

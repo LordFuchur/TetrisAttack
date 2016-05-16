@@ -21,7 +21,14 @@ class Cursor
     this._cursor2 = cursor2;
     this.playfield = field;
   }
-
+  Point getPosCursor1()
+  {
+    return _cursor1;
+  }
+  Point getPosCursor2()
+  {
+    return _cursor2;
+  }
   void move(Direction dir)
   {
     Point<int> up = new Point(_cursor1.x, _cursor1.y+1);
@@ -71,12 +78,16 @@ class Cursor
     Block fCursor02;
     // switch Positions inside the Blocks
     fCursor01 = playfield.getBlockFromField(_cursor1);
-    fCursor01.setPos(_cursor2);
+    fCursor01?.setPos(_cursor2);
     fCursor02 = playfield.getBlockFromField(_cursor2);
-    fCursor02.setPos(_cursor1);
+
+
+
+    fCursor02?.setPos(_cursor1);
     // set into the Field from Cursor 01
-    playfield.setBlockIntoField(fCursor01);
+
+    playfield.setBlockIntoField(fCursor01,(fCursor01 == null)?new Point(_cursor2.x,_cursor2.y):null);
     // set into the Field from Cursor 02
-    playfield.setBlockIntoField(fCursor02);
+    playfield.setBlockIntoField(fCursor02,(fCursor02 == null)?new Point(_cursor1.x,_cursor1.y):null);
   }
 }

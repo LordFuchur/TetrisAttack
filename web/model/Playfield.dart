@@ -21,7 +21,7 @@ class Playfield
   Queue<Command> _actionQueue = new Queue<Command>();
   StreamController _eventController = new StreamController.broadcast();
 
-  int _currentScore;
+  int _currentScore =0;
   int _currentLevelTime; // in seconds
   List<Block> _toDissolve;
   int _fieldX;
@@ -51,6 +51,7 @@ class Playfield
       this._level = level;
       // set start field
       _field = _level.getStartField();
+      _field.insert(_field.length,new List<Block>(_fieldX));
     }
     else
     {
@@ -70,6 +71,7 @@ class Playfield
       _field = new List<List<Block>>(_fieldY);
       for(int row = 0;row < _field.length;row++)
       {
+        _field[row] = new List<Block>();
         for (int column = 0; column < x; column++)
         {
           _field[row].add(null);
@@ -84,7 +86,12 @@ class Playfield
 
   List<List<Block>> getPrintablePlayfield()
   {
-    return _field.reversed;
+    List<List<Block>> retList = new List<List<Block>>();
+    for(int row = _field.length-1;row >= 0;row--)
+    {
+      retList.add(_field[row]);
+    }
+    return retList;
   }
   /**
    * Add a Command Object to the Action Queue
@@ -110,26 +117,24 @@ class Playfield
     switch(nextCmd.getAction())
     {
       case Action.moveUp:
-          _cursor.move(Direction.up);
+        _cursor.move(Direction.up);
         break;
       case Action.moveDown:
-          _cursor.move(Direction.down);
+        _cursor.move(Direction.down);
         break;
       case Action.moveLeft:
-          _cursor.move(Direction.left);
+        _cursor.move(Direction.left);
         break;
       case Action.moveRight:
-          _cursor.move(Direction.right);
+        _cursor.move(Direction.right);
         break;
       case Action.swap:
-          _cursor.swap();
+        _cursor.swap();
         break;
     }
 
     //trigger gravity
-    timerApplyGravity();
-
-
+    //timerApplyGravity(); //atm only for dissolving
   }
 
   /**
@@ -138,31 +143,33 @@ class Playfield
    */
   void timerFieldUp()
   {
+
     // Move the Field up and update the Position of the Blocks
     //-2 here, because we need to skip the first row in the array from top
-    for(int y = (_fieldY - 2); y >= 0; y--)
+    for(int row = (_fieldY - 2); row >= 0; row--)
     {
-      for(int x = 0; x < _fieldX; x++)
+      for(int column = 0; column < _fieldX; column++)
       {
         // move block [x][y] up
-        _field[x][y + 1] = _field[x][y];
+        _field[row + 1][column] = _field[row][column];
         // update the Position of the moved Block
-        _field[x][y + 1].setPos(new Point(x,y + 1));
+        _field[row + 1][column]?.setPos(new Point(column,row + 1));
         // delete Block at the old Position
-        _field[x][y] = null;
+        _field[row][column] = null;
       }
     }
 
     // check for Game Over
     for(int column = 0; column < _fieldX; column++)
     {
-      if(_field[column][_fieldY] != null)
+      if(_field[_fieldY-1][column] != null)
       {
         // a Block reached the upper Border of the play field
         // Raise Game Over Event
         raise(eventType.GameOver);
       }
     }
+    addRow(_level.getBlocks(),_level.getColors());
     //TODO CHECKED MANUAL NEED TO CHECK IN RUNTIME timerFieldUp()
   }
 
@@ -199,52 +206,46 @@ class Playfield
    */
   void timerApplyGravity()
   {
-    bool somethingFalling = false;
-    //
-    for(int row = (1 + unusableRows); row < _fieldY; row++)
+
+    bool columnFalling = false;
+    for(int column = 0;column < _field[0].length;column++)
     {
-      for(int column = 0; column < _fieldX; column++)
+      columnFalling = false;
+      for(int row = unusableRows;row <_field.length; row++)
       {
-        // check if the block can fall
-        if(isValidCoords(new Point(column,row - 1)))
+        if(_field[row][column] == null)
+          columnFalling = true;
+        else
         {
-          if(_field[row - 1][column] == null)
-          {
-            _field[row][column].setFalling(true);
-            _field[row][column].setIsLocked(true);
-          }
+          _field[row][column].setFalling(columnFalling);
+          _field[row][column].setIsLocked(columnFalling);
         }
-
-        // if block falling
-        if(_field[row][column].isFalling())
+      }
+    }
+    for(int column = 0;column < _field[0].length;column++)
+    {
+      for(int row = 0;row <_field.length; row++)
+      {
+        if(_field[row][column]!= null && _field[row][column].isFalling() && isValidCoords(new Point(column,row-1)))
         {
-          // move Block down (falling)
           _field[row-1][column] = _field[row][column];
-          // delete old Block Position
+          _field[row-1][column].setPos(new Point(column,row-1));
           _field[row][column] = null;
-
-          // check if under the new position of the moved block an other block available
-          if(isValidCoords(new Point(column,row - 2)))
+          for(int columnChecker = row-1;columnChecker > 0;columnChecker--)
           {
-            if(_field[column][row - 2] != null)
+
+            _field[row-1][column].setFalling(false);
+            _field[row-1][column].setIsLocked(false);
+            if(_field[columnChecker][column] == null)
             {
-              // Only remove states if locked and falling both true,
-              // secure the option if blocks are locked cause of a combo
-              if(_field[column][row - 1].isFalling() && _field[column][row - 1].isLocked())
-              {
-                _field[column][row - 1].setFalling(false);
-                _field[column][row - 1].setIsLocked(false);
-              }
+              _field[row-1][column].setFalling(true);
+              _field[row-1][column].setIsLocked(true);
             }
           }
-          // at least one block is still falling
-          somethingFalling = true;
         }
-      } // end of for loop
-
-      // Only execute the dissolve trigger if no more blocks are falling
-      if(!somethingFalling) _triggerDissolve();
+      }
     }
+    _triggerDissolve();
     //TODO TESTED MANUALLY NEED TO CHECK IN RUNTIME timerApplyGravity()
   }
 
@@ -255,12 +256,12 @@ class Playfield
    */
   bool isValidCoords(Point coordinate)
   {
-    bool valid = false;
+    bool valid,valid2 = false;
 
-    ((coordinate.x >= 0 + unusableRows) && (coordinate.x < _fieldX)) ? valid = true : valid = false;
-    ((coordinate.y >= 0 + unusableRows) && (coordinate.y < _fieldY)) ? valid = true : valid = false;
+    ((coordinate.x >= 0 ) && (coordinate.x < _fieldX)) ? valid = true : valid = false;
+    ((coordinate.y >= 0 + unusableRows ) && (coordinate.y < _fieldY)) ? valid2 = true : valid = false;
 
-    return valid;
+    return valid && valid2;
   }
 
 
@@ -276,7 +277,7 @@ class Playfield
     {
       for(int column = 0; column < _fieldX; column++)
       {
-        _field[row][column].checkNeighbour(_toDissolve,this);
+        _field[row][column]?.checkNeighbour(_toDissolve,this);
       }
     }
 
@@ -291,8 +292,8 @@ class Playfield
         // set all Blocks over current Block falling
         for(int row = currentBlockPos.y; row < _fieldY; row++)
         {
-          _field[row][currentBlockPos.x].setFalling(true);
-          _field[row][currentBlockPos.x].setIsLocked(true);
+          _field[row][currentBlockPos.x]?.setFalling(true);
+          _field[row][currentBlockPos.x]?.setIsLocked(true);
         }
 
         // add Points to Score
@@ -318,7 +319,7 @@ class Playfield
     int rngColor;
 
     // create new Blocks till the length of the play field
-    for(int row = 0; row < _fieldX; row++)
+    for(int column = 0; column < _fieldX; column++)
     {
       // choose a random Block Type and Color
       rngBlock = rng.nextInt(blockNameList.length);
@@ -327,19 +328,19 @@ class Playfield
       // create a Block of the chosen Type with random Color
       // NOTE: Need to be changed if new BlockTypes are Available in Block.dart !!!
       switch(blockNameList[rngBlock])
-      {
+          {
         case "normalBlock":
-            newBlock = new Block(colors[rngColor],new Point(row,0));
+          newBlock = new Block(colors[rngColor],new Point(column,0));
           break;
 
         default:
-          newBlock = new Block(colors[rngColor],new Point(row,0));
+          newBlock = new Block(colors[rngColor],new Point(column,0));
           break;
 
       } // end switch case
 
       // insert the new Block into the Field
-      _field[row][0] = newBlock;
+      _field[0][column] = newBlock;
 
     } // end for loop
     //TODO TESTED MANUALLY NEED TO CHECK IN RUNTIME addrow()
@@ -362,11 +363,18 @@ class Playfield
    * in the Block.
    * block: block which shall insert into play field
    */
-  void setBlockIntoField(Block block)
+  void setBlockIntoField(Block block ,[Point nullArg = null])
   {
-    if(isValidCoords(block.getPos()))
+    if(nullArg != null)
     {
-      _field[block.getPos().x][block.getPos().y] = block;
+      if(isValidCoords(nullArg))
+      {
+        _field[nullArg.y][nullArg.x] = null;
+      }
+    }
+    else if(isValidCoords(block.getPos()))
+    {
+      _field[block.getPos().y][block.getPos().x] = block;
     }
   }
 
@@ -425,4 +433,9 @@ class Playfield
   {
     return _level.getLevelNumber();
   }
+  Cursor getCursor()
+  {
+    return this._cursor;
+  }
+
 }

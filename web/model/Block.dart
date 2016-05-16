@@ -53,29 +53,31 @@ class Block
   }
   void checkNeighbour(List<Block> dissolveList,Playfield playfield)
   {
-    //first check left & right
-    if(playfield.isValidCoords(new Point(_Pos.x - 1,_Pos.y)) &&
-                               playfield.isValidCoords(new Point(_Pos.x + 1,_Pos.y)) &&
-                               !playfield.getBlockFromField(new Point(_Pos.x - 1,_Pos.y)).isLocked() &&
-                               !playfield.getBlockFromField(new Point(_Pos.x + 1,_Pos.y)).isLocked() &&
-                               playfield.getBlockFromField(new Point(_Pos.x - 1,_Pos.y))._color == playfield.getBlockFromField(new Point(_Pos.x+1,_Pos.y))._color)
+    //check left and right
+    Block leftBlock = playfield.getBlockFromField(new Point(_Pos.x-1,_Pos.y));
+    Block rightBlock = playfield.getBlockFromField(new Point(_Pos.x+1,_Pos.y));
+    if(leftBlock != null && rightBlock != null && !leftBlock.isLocked() && !rightBlock.isLocked())
     {
-      dissolveList.add(this);
-      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x - 1,_Pos.y)));
-      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x + 1,_Pos.y)));
+      if(leftBlock.getColor() == this.getColor() && rightBlock.getColor() == this.getColor())
+      {
+        dissolveList.add(this);
+        dissolveList.add(leftBlock);
+        dissolveList.add(rightBlock);
+        _dissolveCounter++;
+      }
     }
-
-    if(playfield.isValidCoords(new Point(_Pos.x,_Pos.y - 1)) &&
-        playfield.isValidCoords(new Point(_Pos.x,_Pos.y + 1)) &&
-        !playfield.getBlockFromField(new Point(_Pos.x,_Pos.y - 1)).isLocked() &&
-        !playfield.getBlockFromField(new Point(_Pos.x,_Pos.y + 1)).isLocked() &&
-        playfield.getBlockFromField(new Point(_Pos.x,_Pos.y - 1))._color == playfield.getBlockFromField(new Point(_Pos.x,_Pos.y+1))._color)
+    Block topBlock = playfield.getBlockFromField(new Point(_Pos.x,_Pos.y+1));
+    Block downBlock = playfield.getBlockFromField(new Point(_Pos.x,_Pos.y-1));
+    if(!(topBlock == null || downBlock == null ||topBlock.isLocked() || downBlock.isLocked()))
     {
-      dissolveList.add(this);
-      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x,_Pos.y - 1)));
-      dissolveList.add(playfield.getBlockFromField(new Point(_Pos.x,_Pos.y + 1)));
+      if(topBlock.getColor() == this.getColor() && downBlock.getColor() == this.getColor())
+      {
+        dissolveList.add(this);
+        dissolveList.add(topBlock);
+        dissolveList.add(downBlock);
+        _dissolveCounter++;
+      }
     }
-    //throw new Exception("not implemented yet");
   }
   void setPos(Point pos)
   {
@@ -94,5 +96,9 @@ class Block
     retMap ["_PosX"] = _Pos.x;
     retMap ["_PosY"] = _Pos.y;
     return retMap;
+  }
+  String toString()
+  {
+    return this._color.substring(0,1);
   }
 }

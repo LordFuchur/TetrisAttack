@@ -1,5 +1,6 @@
 import "Block.dart";
 import 'dart:math';
+import "../controller/config.dart";
 
 class Level
 {
@@ -75,26 +76,26 @@ class Level
 
   static List<List<Block>> convertStartfieldMapToStartField(List<List<Map>> mapStartField)
   {
-   List<List<Block>> field = new List<List<Block>>();
-   for(int row = 0; row < mapStartField.length; row++)
-   {
+    List<List<Block>> field = new List<List<Block>>();
+    for(int row = 0; row < config.modelFieldY; row++)
+    {
       field.add(new List<Block>());
       //print("Y: " + y.toString());
-      for(int column = 0; column < mapStartField[0].length; column++)
+      for(int column = 0; column < config.modelFieldX; column++)
       {
         //print("\tX: " + x.toString());
-        field[row][column] = null;
+        field[row].add(null);
       }
-   }
-   //first get a list with the correct dimensions filled with nulls
-   for(List<Map> elem in mapStartField)
-   {
-     for(Map element in elem)
-     {
-       field[element["_PosX"]][element["_PosY"]] = new Block(element["_color"],new Point(element["_PosX"],element["_PosY"]));
-     }
-   }
-   //and then replace entries, that are not meant to be null
+    }
+    //first get a list with the correct dimensions filled with nulls
+    for(List<Map> elem in mapStartField)
+    {
+      for(Map element in elem)
+      {
+        field[element["y"]][element["x"]] = new Block(element["_color"],new Point(element["x"],element["y"]));
+      }
+    }
+    //and then replace entries, that are not meant to be null
     return field;
   }
 

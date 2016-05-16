@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 import 'dart:convert';
 import 'dart:async';
 import "GameKeyCommunicator.dart";
@@ -52,11 +52,11 @@ class controller
 
   static const timerFieldUpDuration = const Duration(seconds: 4);
 
-  static const timerFieldActionDuration = const Duration(milliseconds: 250);
+  static const timerFieldActionDuration = const Duration(seconds: 3);
 
-  static const timerGravityDuration = const Duration(seconds: 4);
+  static const timerGravityDuration = const Duration(seconds: 3);
 
-  static const timerViewDuration = const Duration(milliseconds: 250);
+  static const timerViewDuration = const Duration(seconds: 1);
 
   /**
    * Variables
@@ -67,7 +67,11 @@ class controller
   Platformtype devicePlatform;
 
   String testJson = '{"_levelNum": 1,"_colors":["#FF0000","#008000","#0000FF","#FFFF00"],"_blocks":["normalBlock"],"_levelTimeSec":120,"_comboHoldTime":2,"_requiredScore":1000,"_startField":[[{"_color":"red","x":0,"y":0},{"_color":"red","x":1,"y":0},{"_color":"red","x":2,"y":0}],[{"_color":"red","x":0,"y":1},{"_color":"red","x":1,"y":1},{"_color":"red","x":2,"y":1}],[{"_color":"red","x":0,"y":2},{"_color":"red","x":1,"y":2},{"_color":"red","x":2,"y":2}],[{"_color":"red","x":0,"y":3},{"_color":"red","x":1,"y":3},{"_color":"red","x":2,"y":3}]]}';
-  String testJson2 = '{"_levelNum": 1,"_colors": ["#FF0000", "#008000", "#0000FF", "#FFFF00"],"_blocks": ["normalBlock"],"_levelTimeSec": 120,"_comboHoldTime": 2,"_requiredScore": 1000,"_startField": [[{"_color": "red", "x": 0, "y": 1}, {"_color": "red", "x": 1, "y": 1}, {"_color": "red", "x": 2, "y": 1}, {"_color": "red", "x": 3, "y": 1}, {"_color": "red", "x": 4, "y": 1}, {"_color": "red", "x": 5, "y": 1}, {"_color": "blue", "x": 6, "y": 1}, {"_color": "green", "x": 7, "y": 1}],[{"_color": "red", "x": 0, "y": 2}, {"_color": "red", "x": 1, "y": 2}, {"_color": "green", "x": 2, "y": 2}, {"_color": "blue", "x": 3, "y": 2}, {"_color": "red", "x": 4, "y": 2}, {"_color": "red", "x": 5, "y": 2}, {"_color": "blue", "x": 6, "y": 2}, {"_color": "red", "x": 7, "y": 2}],[{"_color": "blue", "x": 0, "y": 3}, {"_color": "yellow", "x": 1, "y": 3}, {"_color": "red", "x": 2, "y": 3}, {"_color": "red", "x": 3, "y": 3}, {"_color": "green", "x": 4, "y": 3}, {"_color": "blue", "x": 5, "y": 3}, {"_color": "green", "x": 6, "y": 3}, {"_color": "red", "x": 7, "y": 3}],[{"_color": "red", "x": 0, "y": 4}, {"_color": "red", "x": 1, "y": 4}, {"_color": "green", "x": 2, "y": 4}, {"_color": "red", "x": 3, "y": 4}, {"_color": "red", "x": 4, "y": 4}, {"_color": "red", "x": 5, "y": 4}, {"_color": "red", "x": 6, "y": 4}, {"_color": "red", "x": 7, "y": 4}],[{"_color": "yellow", "x": 0, "y": 5}, {"_color": "red", "x": 1, "y": 5}, {"_color": "red", "x": 2, "y": 5}, {"_color": "yellow", "x": 3, "y": 5}, {"_color": "blue", "x": 4, "y": 5}, {"_color": "red", "x": 5, "y": 5}, {"_color": "yellow", "x": 6, "y": 5}, {"_color": "yellow", "x": 7, "y": 5}],[{"_color": "red", "x": 0, "y": 6}, {"_color": "red", "x": 1, "y": 6}, {"_color": "red", "x": 2, "y": 6}, {"_color": "red", "x": 3, "y": 6}, {"_color": "red", "x": 4, "y": 6}, {"_color": "red", "x": 5, "y": 6}, {"_color": "red", "x": 6, "y": 6}, {"_color": "blue", "x": 7, "y": 6}],[{"_color": "green", "x": 0, "y": 7}, {"_color": "yellow", "x": 1, "y": 7}, {"_color": "blue", "x": 2, "y": 7}, {"_color": "red", "x": 3, "y": 7}, {"_color": "red", "x": 4, "y": 7}, {"_color": "red", "x": 5, "y": 7}, {"_color": "yellow", "x": 6, "y": 7}, {"_color": "yellow", "x": 7, "y": 7}],[{"_color": "green", "x": 0, "y": 8}, {"_color": "red", "x": 1, "y": 8}, {"_color": "red", "x": 2, "y": 8}, {"_color": "red", "x": 3, "y": 8}, {"_color": "green", "x": 4, "y": 8}, {"_color": "yellow", "x": 5, "y": 8}, {"_color": "red", "x": 6, "y": 8}, {"_color": "red", "x": 7, "y": 8}],[{"_color": "green", "x": 0, "y": 9}, {"_color": "blue", "x": 1, "y": 9}, {"_color": "red", "x": 2, "y": 9}, {"_color": "red", "x": 3, "y": 9}, {"_color": "red", "x": 4, "y": 9}, {"_color": "red", "x": 5, "y": 9}, {"_color": "red", "x": 6, "y": 9}, {"_color": "red", "x": 7, "y": 9}]]}';
+  String testJson2 = '{"_levelNum": 1,"_colors": ["red", "green", "blue", "yellow"],"_blocks": ["normalBlock"],"_levelTimeSec": 120,"_comboHoldTime": 2,"_requiredScore": 1000,"_startField": [[{"_color": "red", "x": 0, "y": 1}, {"_color": "red", "x": 1, "y": 1}, {"_color": "red", "x": 2, "y": 1}, {"_color": "red", "x": 3, "y": 1}, {"_color": "red", "x": 4, "y": 1}, {"_color": "red", "x": 5, "y": 1}, {"_color": "blue", "x": 6, "y": 1}, {"_color": "green", "x": 7, "y": 1}],[{"_color": "red", "x": 0, "y": 2}, {"_color": "red", "x": 1, "y": 2}, {"_color": "green", "x": 2, "y": 2}, {"_color": "blue", "x": 3, "y": 2}, {"_color": "red", "x": 4, "y": 2}, {"_color": "red", "x": 5, "y": 2}, {"_color": "blue", "x": 6, "y": 2}, {"_color": "red", "x": 7, "y": 2}],[{"_color": "blue", "x": 0, "y": 3}, {"_color": "yellow", "x": 1, "y": 3}, {"_color": "red", "x": 2, "y": 3}, {"_color": "red", "x": 3, "y": 3}, {"_color": "green", "x": 4, "y": 3}, {"_color": "blue", "x": 5, "y": 3}, {"_color": "green", "x": 6, "y": 3}, {"_color": "red", "x": 7, "y": 3}],[{"_color": "red", "x": 0, "y": 4}, {"_color": "green", "x": 1, "y": 4}, {"_color": "red", "x": 2, "y": 4}, {"_color": "red", "x": 3, "y": 4}, {"_color": "red", "x": 4, "y": 4}, {"_color": "red", "x": 5, "y": 4}, {"_color": "red", "x": 6, "y": 4}, {"_color": "red", "x": 7, "y": 4}],[{"_color": "yellow", "x": 0, "y": 5}, {"_color": "red", "x": 1, "y": 5}, {"_color": "red", "x": 2, "y": 5}, {"_color": "yellow", "x": 3, "y": 5}, {"_color": "blue", "x": 4, "y": 5}, {"_color": "red", "x": 5, "y": 5}, {"_color": "yellow", "x": 6, "y": 5}, {"_color": "yellow", "x": 7, "y": 5}],[{"_color": "red", "x": 0, "y": 6}, {"_color": "red", "x": 1, "y": 6}, {"_color": "red", "x": 2, "y": 6}, {"_color": "red", "x": 3, "y": 6}, {"_color": "red", "x": 4, "y": 6}, {"_color": "red", "x": 5, "y": 6}, {"_color": "red", "x": 6, "y": 6}, {"_color": "blue", "x": 7, "y": 6}],[{"_color": "green", "x": 0, "y": 7}, {"_color": "yellow", "x": 1, "y": 7}, {"_color": "blue", "x": 2, "y": 7}, {"_color": "red", "x": 3, "y": 7}, {"_color": "red", "x": 4, "y": 7}, {"_color": "red", "x": 5, "y": 7}, {"_color": "yellow", "x": 6, "y": 7}, {"_color": "yellow", "x": 7, "y": 7}],[{"_color": "green", "x": 0, "y": 8}, {"_color": "red", "x": 1, "y": 8}, {"_color": "red", "x": 2, "y": 8}, {"_color": "red", "x": 3, "y": 8}, {"_color": "green", "x": 4, "y": 8}, {"_color": "yellow", "x": 5, "y": 8}, {"_color": "red", "x": 6, "y": 8}, {"_color": "red", "x": 7, "y": 8}],[{"_color": "green", "x": 0, "y": 9}, {"_color": "blue", "x": 1, "y": 9}, {"_color": "red", "x": 2, "y": 9}, {"_color": "red", "x": 3, "y": 9}, {"_color": "red", "x": 4, "y": 9}, {"_color": "red", "x": 5, "y": 9}, {"_color": "red", "x": 6, "y": 9}, {"_color": "red", "x": 7, "y": 9}]]}';
+  String testJson3 = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[                                    [ { "_color":"blue", "x": 0, "y": 1 },  { "_color":"green", "x": 1, "y": 1 },  { "_color":"red", "x": 2, "y": 1 },  { "_color":"red", "x": 3, "y": 1 },  { "_color":"blue", "x": 4, "y": 1 },  { "_color":"yellow", "x": 5, "y": 1 },  { "_color":"yellow", "x": 6, "y": 1 },  { "_color":"green", "x": 7, "y": 1 }  ],    [ { "_color":"blue", "x": 0, "y": 2 },  { "_color":"blue", "x": 1, "y": 2 },  { "_color":"red", "x": 2, "y": 2 },  { "_color":"red", "x": 3, "y": 2 },  { "_color":"blue", "x": 4, "y": 2 },  { "_color":"yellow", "x": 5, "y": 2 },  { "_color":"blue", "x": 6, "y": 2 },  { "_color":"red", "x": 7, "y": 2 }  ] ,   [ { "_color":"green", "x": 0, "y": 3 },  { "_color":"blue", "x": 1, "y": 3 },  { "_color":"red", "x": 2, "y": 3 },  { "_color":"red", "x": 3, "y": 3 },  { "_color":"red", "x": 4, "y": 3 },  { "_color":"red", "x": 5, "y": 3 },  { "_color":"green", "x": 6, "y": 3 },  { "_color":"green", "x": 7, "y": 3 }  ],    [ { "_color":"blue", "x": 0, "y": 4 },  { "_color":"blue", "x": 1, "y": 4 },  { "_color":"green", "x": 2, "y": 4 },  { "_color":"green", "x": 3, "y": 4 },  { "_color":"green", "x": 4, "y": 4 },  { "_color":"red", "x": 5, "y": 4 },  { "_color":"yellow", "x": 6, "y": 4 },  { "_color":"blue", "x": 7, "y": 4 }  ],    [ { "_color":"yellow", "x": 0, "y": 5 },  { "_color":"blue", "x": 1, "y": 5 },  { "_color":"green", "x": 2, "y": 5 },  { "_color":"green", "x": 3, "y": 5 },  { "_color":"blue", "x": 4, "y": 5 },  { "_color":"blue", "x": 5, "y": 5 },  { "_color":"red", "x": 6, "y": 5 },  { "_color":"yellow", "x": 7, "y": 5 }  ],    [ { "_color":"red", "x": 0, "y": 6 },  { "_color":"yellow", "x": 1, "y": 6 },  { "_color":"green", "x": 2, "y": 6 },  { "_color":"green", "x": 3, "y": 6 },  { "_color":"red", "x": 4, "y": 6 },  { "_color":"green", "x": 5, "y": 6 },  { "_color":"red", "x": 6, "y": 6 },  { "_color":"blue", "x": 7, "y": 6 }  ] ,   [ { "_color":"blue", "x": 0, "y": 7 },  { "_color":"green", "x": 1, "y": 7 },  { "_color":"red", "x": 2, "y": 7 },  { "_color":"yellow", "x": 3, "y": 7 },  { "_color":"yellow", "x": 4, "y": 7 },  { "_color":"yellow", "x": 5, "y": 7 },  { "_color":"blue", "x": 6, "y": 7 },  { "_color":"blue", "x": 7, "y": 7 }  ] ,   [ { "_color":"red", "x": 0, "y": 8 },  { "_color":"blue", "x": 1, "y": 8 },  { "_color":"green", "x": 2, "y": 8 },  { "_color":"yellow", "x": 3, "y": 8 }, { "_color":"blue", "x": 5, "y": 8 },  { "_color":"yellow", "x": 6, "y": 8 },  { "_color":"blue", "x": 7, "y": 8 }  ] ,   [ { "_color":"green", "x": 0, "y": 9 },  { "_color":"yellow", "x": 1, "y": 9 },  { "_color":"red", "x": 2, "y": 9 },  { "_color":"red", "x": 3, "y": 9 }, { "_color":"yellow", "x": 5, "y": 9 },  { "_color":"green", "x": 6, "y": 9 },  { "_color":"blue", "x": 7, "y": 9 }  ] ,   [ { "_color":"blue", "x": 1, "y": 10 },  { "_color":"yellow", "x": 2, "y": 10 },  { "_color":"red", "x": 3, "y": 10 }, { "_color":"yellow", "x": 5, "y": 10 },  { "_color":"green", "x": 6, "y": 10 },  { "_color":"yellow", "x": 7, "y": 10 }  ] ,   [ { "_color":"red", "x": 1, "y": 11 },  { "_color":"blue", "x": 2, "y": 11 },  { "_color":"yellow", "x": 3, "y": 11 }, { "_color":"yellow", "x": 5, "y": 11 },  { "_color":"blue", "x": 6, "y": 11 },  { "_color":"red", "x": 7, "y": 11 }  ] ,   [ { "_color":"blue", "x": 1, "y": 12 },  { "_color":"blue", "x": 2, "y": 12 },  { "_color":"red", "x": 3, "y": 12 },  { "_color":"red", "x": 5, "y": 12 },  { "_color":"green", "x": 6, "y": 12 },  { "_color":"green", "x": 7, "y": 12 }  ]   ]}';//return of the jsons
+  String testJson4 = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[                                     [ { "_color":"red", "x": 0, "y": 1 },  { "_color":"red", "x": 1, "y": 1 },  { "_color":"red", "x": 2, "y": 1 } ],    [ { "_color":"red", "x": 1, "y": 2 } ],    [ { "_color":"red", "x": 1, "y": 3 } ]   ]}';
+  String gravityTest = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[ [ { "_color":"red", "x": 3, "y": 5 }   ]]}';
+  String gravityTestFusion = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[                                     [ { "_color":"red", "x": 2, "y": 8 }, { "_color":"red", "x": 3, "y": 8 }, { "_color":"red", "x": 4, "y": 8 }, { "_color":"red", "x": 5, "y": 8 }, { "_color":"red", "x": 6, "y": 8 }],                                   [ { "_color":"red", "x": 3, "y": 7 }, { "_color":"red", "x": 4, "y": 7 }, { "_color":"red", "x": 5, "y": 7 } ]                                   ]}';
   Level testLevel;
 
   /**
@@ -89,7 +93,7 @@ class controller
 
     // Create View and GameKeyCom
     _gamekey = new GameKeyCommunicator();
-    _view = new View(devicePlatform);
+    _view = new View();
 
     // Load Test Level
     loadLevels();
@@ -139,7 +143,7 @@ class controller
    */
   Platformtype detectDevice()
   {
-    String device = window.navigator.platform;
+    /*String device = window.navigator.platform;
     device = device.toLowerCase();
     if(device.contains("arm") || device.contains("iphone") || device.contains("android") || device.contains("aarch64") || device.contains("ipod"))
     {
@@ -152,7 +156,7 @@ class controller
     else
     {
       return Platformtype.Computer;
-    }
+    }*/
   }
 
   /**
@@ -221,7 +225,7 @@ class controller
       }
       */
 
-      Map level = JSON.decode(testJson2);
+      Map level = JSON.decode(testJson3);
       List<List<Map>> mapField = level["_startField"];
       testLevel = new Level(
           level["_colors"],
@@ -263,7 +267,7 @@ class controller
   {
     _view.printDebugMessage("Test Control Events");
 
-    window.onKeyDown.listen((KeyboardEvent ev)
+    /*window.onKeyDown.listen((KeyboardEvent ev)
     {
       _view.printDebugMessage("Key Pushed " + ev.keyCode.toString());
       // Escape from Event if no Game is running
@@ -279,10 +283,10 @@ class controller
           _currentField.addCommand(new Command(Action.moveRight));
           break;
         case KeyCode.UP:
-          _currentField.addCommand(new Command(Action.moveUp));
+          _currentField.addCommand(new Command(Action.moveDown));
           break;
         case KeyCode.DOWN:
-          _currentField.addCommand(new Command(Action.moveDown));
+          _currentField.addCommand(new Command(Action.moveUp));
           break;
         case KeyCode.SPACE:
           _currentField.addCommand(new Command(Action.swap));
@@ -298,7 +302,7 @@ class controller
           break;
       }
     });
-
+    */
   }
 
   /**
@@ -312,9 +316,9 @@ class controller
 
     // choose action for each eventType
     switch(event)
-    {
+        {
       case eventType.GameOver:
-        // execute Game Over Method
+      // execute Game Over Method
         gameOver();
         // set Flag game running
         isGameRunning = false;
@@ -326,10 +330,10 @@ class controller
         isGameRunning = false;
         break;
       case eventType.Loaded:
-        // Create Timers etc.
-        timerPlaytime = new Timer.periodic(timerPlaytimeDuration,(_) => _currentField.timerIncreaseLevelTime());
+      // Create Timers etc.
+      //timerPlaytime = new Timer.periodic(timerPlaytimeDuration,(_) => _currentField.timerIncreaseLevelTime());
         timerFieldAction = new Timer.periodic(timerFieldActionDuration, (_) => _currentField.timerDoNextAction());
-        timerFieldUp = new Timer.periodic(timerFieldUpDuration, (_) => _currentField.timerFieldUp());
+        //timerFieldUp = new Timer.periodic(timerFieldUpDuration, (_) => _currentField.timerFieldUp());
         timerGravity = new Timer.periodic(timerGravityDuration, (_) => _currentField.timerApplyGravity());
         timerView = new Timer.periodic(timerViewDuration, (_) => _view.update(_currentField));
         // set Flag game running

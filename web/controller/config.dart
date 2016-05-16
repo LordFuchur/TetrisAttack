@@ -5,12 +5,12 @@ class config
   static int dimBlockX = 4;
   static int dimBlockY = 4;
   static int fieldX = 8;
-  static int fieldY = 9;
+  static int fieldY = 13;
   static int modelFieldX = 8;
-  static int modelFieldY = 9;
+  static int modelFieldY = 13;
   static List<String> colors = ['red','green','blue','yellow'];
-  static Point cursor01 = new Point(0,0);
-  static Point cursor02 = new Point(1,0);
+  static Point cursor01 = new Point(0,13);
+  static Point cursor02 = new Point(1,13);
 
 /* Field
   upwards

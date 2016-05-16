@@ -128,8 +128,8 @@ class controller
     //
     eventHandler(eventType.Loaded);
     // enable Events of the play field
-    _currentField.allEvents.listen((e) => eventHandler(e));
 
+    _currentField.allEvents.listen((e) => eventHandler(e));
     //throw new Exception("not tested yet");
   }
 
@@ -340,11 +340,9 @@ class controller
 
 
   }
-
   /**
    * Called by Event handler after a Game Over was recognized
    */
-
 
   void gameOver()
   {
@@ -357,8 +355,6 @@ class controller
   /**
    * Called by Event handler after the Level was successful ended
    */
-
-
   void win()
   {
     print("Win Level #1");

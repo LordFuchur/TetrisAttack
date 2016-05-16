@@ -76,18 +76,25 @@ class Level
   static List<List<Block>> convertStartfieldMapToStartField(List<List<Map>> mapStartField)
   {
    List<List<Block>> field = new List<List<Block>>();
-
-   for(int y = 0; y < mapStartField.length; y++)
+   for(int row = 0; row < mapStartField.length; row++)
    {
       field.add(new List<Block>());
       //print("Y: " + y.toString());
-      for(int x = 0; x < mapStartField[0].length; x++)
+      for(int column = 0; column < mapStartField[0].length; column++)
       {
         //print("\tX: " + x.toString());
-        field[y].add(new Block(mapStartField[y][x]["_color"],new Point(mapStartField[y][x]["_PosX"],mapStartField[y][x]["_PosY"])));
+        field[row][column] = null;
       }
    }
-
+   //first get a list with the correct dimensions filled with nulls
+   for(List<Map> elem in mapStartField)
+   {
+     for(Map element in elem)
+     {
+       field[element["_PosX"]][element["_PosY"]] = new Block(element["_color"],new Point(element["_PosX"],element["_PosY"]));
+     }
+   }
+   //and then replace entries, that are not meant to be null
     return field;
   }
 
@@ -96,13 +103,13 @@ class Level
     Map retMap = new Map();
     List<List<Map>> convertedField = new List<List<Map>>();
 
-    for(int y = 0; y < 4;y++)
+    for(int row = 0; row < 4;row++)
     {
       convertedField.add(new List<Map>());
 
-      for(int x = 0; x < 3; x++)
+      for(int column = 0; column < 3; column++)
       {
-        convertedField[y].add(_startField[y][x].convertBlock());
+        convertedField[row].add(_startField[row][column].convertBlock());
       }
     }
 

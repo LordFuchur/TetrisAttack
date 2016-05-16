@@ -42,6 +42,8 @@ class Playfield
     // Set field size and create cursor
     this._fieldX = x;
     this._fieldY = y;
+    _fieldY += unusableRows;//adding the extra rows, which  have to be visible
+
     _cursor = new Cursor(cursor01,cursor02,this);
 
     if(level != null)
@@ -52,8 +54,8 @@ class Playfield
     }
     else
     {
-      // Sandbox Mode without Level
-      _field = new List<List<Block>>();
+      /*// Sandbox Mode without Level
+      _field = new List<List<Block>>(y);
       // Create field and fill with null
       for(int y = 0; y < _fieldY; y++)
       {
@@ -63,12 +65,27 @@ class Playfield
           _field[y].add(null);
         }
       }
+      */
+
+      _field = new List<List<Block>>(_fieldY);
+      for(int row = 0;row < _field.length;row++)
+      {
+        for (int column = 0; column < x; column++)
+        {
+          _field[row].add(null);
+        }
+      }
     }
 
     // Raise Event that the Field is ready
-    fetch(eventType.Loaded);
+    raise(eventType.Loaded);
+
   }
 
+  List<List<Block>> getPrintablePlayfield()
+  {
+    return _field.reversed;
+  }
   /**
    * Add a Command Object to the Action Queue
    * cmd: take a Command object
@@ -76,7 +93,6 @@ class Playfield
   void addCommand(Command cmd)
   {
     _actionQueue.add(cmd);
-
   }
   /**
    * Triggered periodic by a Timer from the Controller, dequeue next Command
@@ -123,7 +139,8 @@ class Playfield
   void timerFieldUp()
   {
     // Move the Field up and update the Position of the Blocks
-    for(int y = (_fieldY - 1); y >= 0; y--)
+    //-2 here, because we need to skip the first row in the array from top
+    for(int y = (_fieldY - 2); y >= 0; y--)
     {
       for(int x = 0; x < _fieldX; x++)
       {
@@ -137,17 +154,16 @@ class Playfield
     }
 
     // check for Game Over
-    for(int r = 0; r < _fieldX; r++)
+    for(int column = 0; column < _fieldX; column++)
     {
-      if(_field[r][_fieldY] != null)
+      if(_field[column][_fieldY] != null)
       {
         // a Block reached the upper Border of the play field
         // Raise Game Over Event
-        fetch(eventType.GameOver);
+        raise(eventType.GameOver);
       }
     }
-
-
+    //TODO CHECKED MANUAL NEED TO CHECK IN RUNTIME timerFieldUp()
   }
 
   /**
@@ -166,12 +182,12 @@ class Playfield
       if(_currentScore >= _level.getRequiredScore())
       {
         // Raise Win Event
-        fetch(eventType.Win);
+        raise(eventType.Win);
       }
       else
       {
         // Raise Game Over Event
-        fetch(eventType.GameOver);
+        raise(eventType.GameOver);
       }
     }
 
@@ -185,39 +201,39 @@ class Playfield
   {
     bool somethingFalling = false;
     //
-    for(int y = (1 + unusableRows); y < _fieldY; y++)
+    for(int row = (1 + unusableRows); row < _fieldY; row++)
     {
-      for(int x = 0; x < _fieldX; x++)
+      for(int column = 0; column < _fieldX; column++)
       {
         // check if the block can fall
-        if(isValidCoords(new Point(x,y - 1)))
+        if(isValidCoords(new Point(column,row - 1)))
         {
-          if(_field[x][y - 1] == null)
+          if(_field[row - 1][column] == null)
           {
-            _field[x][y].setFalling(true);
-            _field[x][y].setIsLocked(true);
+            _field[row][column].setFalling(true);
+            _field[row][column].setIsLocked(true);
           }
         }
 
         // if block falling
-        if(_field[x][y].isFalling())
+        if(_field[row][column].isFalling())
         {
           // move Block down (falling)
-          _field[x][y - 1] = _field[x][y];
+          _field[row-1][column] = _field[row][column];
           // delete old Block Position
-          _field[x][y] = null;
+          _field[row][column] = null;
 
-          // check if under the new position of the moved block a other block available
-          if(isValidCoords(new Point(x,y - 2)))
+          // check if under the new position of the moved block an other block available
+          if(isValidCoords(new Point(column,row - 2)))
           {
-            if(_field[x][y - 2] != null)
+            if(_field[column][row - 2] != null)
             {
               // Only remove states if locked and falling both true,
               // secure the option if blocks are locked cause of a combo
-              if(_field[x][y - 1].isFalling() && _field[x][y - 1].isLocked())
+              if(_field[column][row - 1].isFalling() && _field[column][row - 1].isLocked())
               {
-                _field[x][y - 1].setFalling(false);
-                _field[x][y - 1].setIsLocked(false);
+                _field[column][row - 1].setFalling(false);
+                _field[column][row - 1].setIsLocked(false);
               }
             }
           }
@@ -229,8 +245,7 @@ class Playfield
       // Only execute the dissolve trigger if no more blocks are falling
       if(!somethingFalling) _triggerDissolve();
     }
-
-    throw new Exception("not implemented yet");
+    //TODO TESTED MANUALLY NEED TO CHECK IN RUNTIME timerApplyGravity()
   }
 
   /**
@@ -257,11 +272,11 @@ class Playfield
     _toDissolve = new List<Block>();
     Point currentBlockPos;
     // trigger at every Block the dissolve methods
-    for(int y = 0; y < _fieldY; y++)
+    for(int row = 0; row < _fieldY; row++)
     {
-      for(int x = 0; x < _fieldX; x++)
+      for(int column = 0; column < _fieldX; column++)
       {
-        _field[x][y].checkNeighbour(_toDissolve,this);
+        _field[row][column].checkNeighbour(_toDissolve,this);
       }
     }
 
@@ -269,26 +284,25 @@ class Playfield
     for(Block b in _toDissolve)
     {
       currentBlockPos = b.getPos();
-      _field[currentBlockPos.x][currentBlockPos.y] = null;
 
       // check if the block exist (could be that block are member of two combos)
-      if(_field[currentBlockPos.x][currentBlockPos.y] != null)
+      if(_field[currentBlockPos.y][currentBlockPos.x] != null)
       {
         // set all Blocks over current Block falling
-        for(int y = currentBlockPos.y; y < _fieldY; y++)
+        for(int row = currentBlockPos.y; row < _fieldY; row++)
         {
-          _field[currentBlockPos.x][y].setFalling(true);
-          _field[currentBlockPos.x][y].setIsLocked(true);
+          _field[row][currentBlockPos.x].setFalling(true);
+          _field[row][currentBlockPos.x].setIsLocked(true);
         }
 
         // add Points to Score
         _currentScore += b.getDissolveCounter();
 
       }
+      _field[currentBlockPos.y][currentBlockPos.x] = null;
     }
     _toDissolve = null;
-
-
+    //TODO TESTED MANUALLY NEED TO CHECK IN RUNTIME _triggerDissolve()
   }
 
   /**
@@ -304,7 +318,7 @@ class Playfield
     int rngColor;
 
     // create new Blocks till the length of the play field
-    for(int r = 0; r < _fieldX; r++)
+    for(int row = 0; row < _fieldX; row++)
     {
       // choose a random Block Type and Color
       rngBlock = rng.nextInt(blockNameList.length);
@@ -315,22 +329,20 @@ class Playfield
       switch(blockNameList[rngBlock])
       {
         case "normalBlock":
-            newBlock = new Block(colors[rngColor],new Point(r,0));
+            newBlock = new Block(colors[rngColor],new Point(row,0));
           break;
 
         default:
-          newBlock = new Block(colors[rngColor],new Point(r,0));
-          throw new Exception("Playfield:addRow => BlockType was not detected!");
+          newBlock = new Block(colors[rngColor],new Point(row,0));
           break;
 
       } // end switch case
 
       // insert the new Block into the Field
-      _field[r][0] = newBlock;
+      _field[row][0] = newBlock;
 
     } // end for loop
-
-
+    //TODO TESTED MANUALLY NEED TO CHECK IN RUNTIME addrow()
   }
 
   /**
@@ -364,7 +376,7 @@ class Playfield
    * in the eventType Enum.
    * type: the eventType which are defined in eventType Enum
    */
-  fetch(eventType type)
+  raise(eventType type)
   {
     // create a new Event and push it on the Stream
     switch(type)

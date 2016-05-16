@@ -2,6 +2,7 @@ import "dart:html";
 import "../model/Playfield.dart";
 import "../controller/controller.dart";
 import "../controller/config.dart";
+import "../model/Block.dart";
 class View
 {
   /**
@@ -57,8 +58,8 @@ class View
       tableString += "<tr>";
       for (int x = 0; x < config.modelFieldX; x++)
       {
-        printMessage("printing Block :"+x.toString() + "/"+y.toString());
-        var temp = model.getBlockFromField(new Point(x,y));
+        printMessage("printing Block :"+x.toString() + ":" + y.toString());
+        Block temp = model.getBlockFromField(new Point(x,y));
         printMessage("after var fetch");
         tableString += '<td id="' + x.toString() + ':'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
       }

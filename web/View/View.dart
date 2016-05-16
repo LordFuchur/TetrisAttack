@@ -52,27 +52,27 @@ class View
   {
     String tableString = "";
 
-    printMessage("pre for loop");
+    printDebugMessage("pre for loop");
     for (int y = config.modelFieldY; y > 0; y--)
     {
       tableString += "<tr>";
       for (int x = 0; x < config.modelFieldX; x++)
       {
-        printMessage("printing Block :"+x.toString() + ":" + y.toString());
+        printDebugMessage("printing Block :"+x.toString() + ":" + y.toString());
         Block temp = model.getBlockFromField(new Point(x,y));
-        printMessage("after var fetch");
+        printDebugMessage("after var fetch");
         tableString += '<td id="TD' + x.toString() + 'g'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
       }
       tableString += "</tr>\n";
     }
 
-    printMessage("After create/before queryselector");
+    printDebugMessage("After create/before queryselector");
     gameplayTable.setInnerHtml(tableString);
     querySelector("#TD3g3").setAttribute("class","cursor");
     querySelector("#TD4g3").setAttribute("class","cursor");
   }
 
-  void showScore(List<String> scoreList)
+  void showScore(Map<String,int> scoreList)
   {
 
   }
@@ -94,7 +94,7 @@ class View
 
 
 
-  void printMessage(String msg)
+  void printDebugMessage(String msg)
   {
     debugOverlay.appendText(msg + "\n");
   }

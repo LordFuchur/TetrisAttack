@@ -89,7 +89,7 @@ class controller
 
     print("Controller Constructor #2");
 
-    _view.printMessage("blub");
+    _view.printDebugMessage("blub");
     _view.generateField();
 
     loadLevels();
@@ -112,7 +112,7 @@ class controller
   void newGame()
   {
     // create new play field with specific setting
-    _currentField = new Playfield(config.modelFieldX,config.modelFieldY,config.cursor01,config.cursor02,testLevel);
+    _currentField = new Playfield(config.modelFieldX,config.modelFieldY,config.cursor01,config.cursor02,null);
     // enable Events of the play field
     _currentField.allEvents.listen((e) => eventHandler(e));
 
@@ -149,8 +149,6 @@ class controller
     // Load Config
     //TODO: add String of the JSON
     Map jsonConfig = JSON.decode("String of the JSOn");
-
-
     return false;
   }
 

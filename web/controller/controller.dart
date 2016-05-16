@@ -38,6 +38,8 @@ class controller
 
   Timer timerGravity;
 
+  Timer timerView;
+
   /**
    * Constants
    */
@@ -54,6 +56,8 @@ class controller
 
   static const timerGravityDuration = const Duration(seconds: 4);
 
+  static const timerViewDuration = const Duration(milliseconds: 250);
+
   /**
    * Variables
    */
@@ -63,6 +67,7 @@ class controller
   Platformtype devicePlatform;
 
   String testJson = '{"_levelNum": 1,"_colors":["#FF0000","#008000","#0000FF","#FFFF00"],"_blocks":["normalBlock"],"_levelTimeSec":120,"_comboHoldTime":2,"_requiredScore":1000,"_startField":[[{"_color":"red","x":0,"y":0},{"_color":"red","x":1,"y":0},{"_color":"red","x":2,"y":0}],[{"_color":"red","x":0,"y":1},{"_color":"red","x":1,"y":1},{"_color":"red","x":2,"y":1}],[{"_color":"red","x":0,"y":2},{"_color":"red","x":1,"y":2},{"_color":"red","x":2,"y":2}],[{"_color":"red","x":0,"y":3},{"_color":"red","x":1,"y":3},{"_color":"red","x":2,"y":3}]]}';
+  String testJson2 = '{"_levelNum": 1,"_colors": ["#FF0000", "#008000", "#0000FF", "#FFFF00"],"_blocks": ["normalBlock"],"_levelTimeSec": 120,"_comboHoldTime": 2,"_requiredScore": 1000,"_startField": [[{"_color": "red", "x": 0, "y": 1}, {"_color": "red", "x": 1, "y": 1}, {"_color": "red", "x": 2, "y": 1}, {"_color": "red", "x": 3, "y": 1}, {"_color": "red", "x": 4, "y": 1}, {"_color": "red", "x": 5, "y": 1}, {"_color": "blue", "x": 6, "y": 1}, {"_color": "green", "x": 7, "y": 1}],[{"_color": "red", "x": 0, "y": 2}, {"_color": "red", "x": 1, "y": 2}, {"_color": "green", "x": 2, "y": 2}, {"_color": "blue", "x": 3, "y": 2}, {"_color": "red", "x": 4, "y": 2}, {"_color": "red", "x": 5, "y": 2}, {"_color": "blue", "x": 6, "y": 2}, {"_color": "red", "x": 7, "y": 2}],[{"_color": "blue", "x": 0, "y": 3}, {"_color": "yellow", "x": 1, "y": 3}, {"_color": "red", "x": 2, "y": 3}, {"_color": "red", "x": 3, "y": 3}, {"_color": "green", "x": 4, "y": 3}, {"_color": "blue", "x": 5, "y": 3}, {"_color": "green", "x": 6, "y": 3}, {"_color": "red", "x": 7, "y": 3}],[{"_color": "red", "x": 0, "y": 4}, {"_color": "red", "x": 1, "y": 4}, {"_color": "green", "x": 2, "y": 4}, {"_color": "red", "x": 3, "y": 4}, {"_color": "red", "x": 4, "y": 4}, {"_color": "red", "x": 5, "y": 4}, {"_color": "red", "x": 6, "y": 4}, {"_color": "red", "x": 7, "y": 4}],[{"_color": "yellow", "x": 0, "y": 5}, {"_color": "red", "x": 1, "y": 5}, {"_color": "red", "x": 2, "y": 5}, {"_color": "yellow", "x": 3, "y": 5}, {"_color": "blue", "x": 4, "y": 5}, {"_color": "red", "x": 5, "y": 5}, {"_color": "yellow", "x": 6, "y": 5}, {"_color": "yellow", "x": 7, "y": 5}],[{"_color": "red", "x": 0, "y": 6}, {"_color": "red", "x": 1, "y": 6}, {"_color": "red", "x": 2, "y": 6}, {"_color": "red", "x": 3, "y": 6}, {"_color": "red", "x": 4, "y": 6}, {"_color": "red", "x": 5, "y": 6}, {"_color": "red", "x": 6, "y": 6}, {"_color": "blue", "x": 7, "y": 6}],[{"_color": "green", "x": 0, "y": 7}, {"_color": "yellow", "x": 1, "y": 7}, {"_color": "blue", "x": 2, "y": 7}, {"_color": "red", "x": 3, "y": 7}, {"_color": "red", "x": 4, "y": 7}, {"_color": "red", "x": 5, "y": 7}, {"_color": "yellow", "x": 6, "y": 7}, {"_color": "yellow", "x": 7, "y": 7}],[{"_color": "green", "x": 0, "y": 8}, {"_color": "red", "x": 1, "y": 8}, {"_color": "red", "x": 2, "y": 8}, {"_color": "red", "x": 3, "y": 8}, {"_color": "green", "x": 4, "y": 8}, {"_color": "yellow", "x": 5, "y": 8}, {"_color": "red", "x": 6, "y": 8}, {"_color": "red", "x": 7, "y": 8}],[{"_color": "green", "x": 0, "y": 9}, {"_color": "blue", "x": 1, "y": 9}, {"_color": "red", "x": 2, "y": 9}, {"_color": "red", "x": 3, "y": 9}, {"_color": "red", "x": 4, "y": 9}, {"_color": "red", "x": 5, "y": 9}, {"_color": "red", "x": 6, "y": 9}, {"_color": "red", "x": 7, "y": 9}]]}';
   Level testLevel;
 
   /**
@@ -79,24 +84,31 @@ class controller
 
   controller()
   {
-    print("Controller Constructor #1");
-
+    // Detect Device
     devicePlatform = detectDevice();
 
     // Create View and GameKeyCom
     _gamekey = new GameKeyCommunicator();
     _view = new View(devicePlatform);
 
-    print("Controller Constructor #2");
-
-    _view.printMessage("blub");
-    _view.generateField();
-
+    // Load Test Level
     loadLevels();
 
+    _view.printMessage("Mapped Level Constructor #2");
+
+    // enable Keyboard Events
+    controlEvents();
+
+    _view.printMessage("Control Events done");
+
+    // Start new Game
     newGame();
 
+    _view.printMessage("New Game done");
+
     _view.update(_currentField);
+
+    _view.printMessage("update Field");
     // GameKey Connection
 
     // Load Config and Level Files
@@ -113,6 +125,8 @@ class controller
   {
     // create new play field with specific setting
     _currentField = new Playfield(config.modelFieldX,config.modelFieldY,config.cursor01,config.cursor02,testLevel);
+    //
+    eventHandler(eventType.Loaded);
     // enable Events of the play field
     _currentField.allEvents.listen((e) => eventHandler(e));
 
@@ -207,7 +221,7 @@ class controller
       }
       */
 
-      Map level = JSON.decode(testJson);
+      Map level = JSON.decode(testJson2);
       List<List<Map>> mapField = level["_startField"];
       testLevel = new Level(
           level["_colors"],
@@ -247,8 +261,11 @@ class controller
 
   void controlEvents()
   {
+    _view.printMessage("Test Control Events");
+
     window.onKeyDown.listen((KeyboardEvent ev)
     {
+      _view.printMessage("Key Pushed " + ev.keyCode.toString());
       // Escape from Event if no Game is running
       if(isGameRunning == false) return;
 
@@ -291,6 +308,8 @@ class controller
 
   void eventHandler(eventType event)
   {
+    _view.printMessage(event.toString());
+
     // choose action for each eventType
     switch(event)
     {
@@ -312,8 +331,10 @@ class controller
         timerFieldAction = new Timer.periodic(timerFieldActionDuration, (_) => _currentField.timerDoNextAction());
         timerFieldUp = new Timer.periodic(timerFieldUpDuration, (_) => _currentField.timerFieldUp());
         timerGravity = new Timer.periodic(timerGravityDuration, (_) => _currentField.timerApplyGravity());
+        timerView = new Timer.periodic(timerViewDuration, (_) => _view.update(_currentField));
         // set Flag game running
         isGameRunning = true;
+
         break;
     }
 

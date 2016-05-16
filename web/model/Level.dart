@@ -80,10 +80,10 @@ class Level
    for(int y = 0; y < mapStartField.length; y++)
    {
       field.add(new List<Block>());
-      print("Y: " + y.toString());
+      //print("Y: " + y.toString());
       for(int x = 0; x < mapStartField[0].length; x++)
       {
-        print("\tX: " + x.toString());
+        //print("\tX: " + x.toString());
         field[y].add(new Block(mapStartField[y][x]["_color"],new Point(mapStartField[y][x]["_PosX"],mapStartField[y][x]["_PosY"])));
       }
    }

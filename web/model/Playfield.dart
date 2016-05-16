@@ -78,7 +78,6 @@ class Playfield
     _actionQueue.add(cmd);
 
   }
-
   /**
    * Triggered periodic by a Timer from the Controller, dequeue next Command
    * from Action Queue and execute it.

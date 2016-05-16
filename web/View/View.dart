@@ -47,34 +47,39 @@ class View
 
     infoBox.setInnerHtml(infoBoxString);
   }
-
+  bool once = false;
   void update(Playfield model)
   {
-    String tableString = "";
 
+    if(once)
+    {
+      return;
+    }
+    once = !true;
+
+    String tableString = "";
+    List<List<Block>> retList = model.getPrintablePlayfield();
     printDebugMessage("pre for loop");
-    for (int y = config.modelFieldY; y > 0; y--)
+    for (int row = retList.length-1; row >=0; row--)
     {
       tableString += "<tr>";
-      for (int x = 0; x < config.modelFieldX; x++)
+      for (int column = 0; column < retList[0].length; column++)
       {
-        printDebugMessage("printing Block :"+x.toString() + ":" + y.toString());
-        Block temp = model.getBlockFromField(new Point(x,y));
-        printDebugMessage("after var fetch");
-        tableString += '<td id="TD' + x.toString() + 'g'+ y.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(x,y)).getColor() )+ '" class="tableCell"></td>';
+        Block temp = model.getBlockFromField(new Point(column,row));
+        tableString += '<td id="TD' + column.toString() + 'g'+ row.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(column,row)).getColor() )+ '" class="tableCell"></td>';
       }
       tableString += "</tr>\n";
     }
-
-    printDebugMessage("After create/before queryselector");
     gameplayTable.setInnerHtml(tableString);
-    querySelector("#TD3g3").setAttribute("class","cursor");
-    querySelector("#TD4g3").setAttribute("class","cursor");
+    //_writeInfoBox(model.getTimeleft(),model.getCurrentScore(),model.getCurrentLevelNumber());
+    Point cur1 =  model.getCursor().getPosCursor1();
+    Point cur2 =  model.getCursor().getPosCursor2();
+    querySelector("#TD"+cur1.x.toString()+"g"+cur1.y.toString()).setAttribute("class","cursor");
+    querySelector("#TD"+cur2.x.toString()+"g"+cur2.y.toString()).setAttribute("class","cursor");
   }
 
   void showScore(Map<String,int> scoreList)
   {
-
   }
 
   void generateField()

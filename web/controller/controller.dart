@@ -1,4 +1,4 @@
-//import 'dart:html';
+import 'dart:html';
 import 'dart:convert';
 import 'dart:async';
 import "GameKeyCommunicator.dart";
@@ -52,11 +52,11 @@ class controller
 
   static const timerFieldUpDuration = const Duration(seconds: 4);
 
-  static const timerFieldActionDuration = const Duration(seconds: 3);
+  static const timerFieldActionDuration = const Duration(milliseconds:  50);
 
-  static const timerGravityDuration = const Duration(seconds: 3);
+  static const timerGravityDuration = const Duration(milliseconds: 300 );
 
-  static const timerViewDuration = const Duration(seconds: 1);
+  static const timerViewDuration = const Duration(milliseconds : 200);
 
   /**
    * Variables
@@ -72,6 +72,7 @@ class controller
   String testJson4 = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[                                     [ { "_color":"red", "x": 0, "y": 1 },  { "_color":"red", "x": 1, "y": 1 },  { "_color":"red", "x": 2, "y": 1 } ],    [ { "_color":"red", "x": 1, "y": 2 } ],    [ { "_color":"red", "x": 1, "y": 3 } ]   ]}';
   String gravityTest = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[ [ { "_color":"red", "x": 3, "y": 5 }   ]]}';
   String gravityTestFusion = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[                                     [ { "_color":"red", "x": 2, "y": 8 }, { "_color":"red", "x": 3, "y": 8 }, { "_color":"red", "x": 4, "y": 8 }, { "_color":"red", "x": 5, "y": 8 }, { "_color":"red", "x": 6, "y": 8 }],                                   [ { "_color":"red", "x": 3, "y": 7 }, { "_color":"red", "x": 4, "y": 7 }, { "_color":"red", "x": 5, "y": 7 } ]                                   ]}';
+  String firstViewTest = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":30,"_comboHoldTime":2,"_blocks":[ "normalBlock" ],"_colors":[ "red","blue","green","yellow","orange" ],"_startField":[  [  { "_color":"red", "x": 0, "y": 1 },  { "_color":"red", "x": 1, "y": 1 },  { "_color":"blue", "x": 2, "y": 1 },  { "_color":"yellow", "x": 3, "y": 1 },  { "_color":"red", "x": 4, "y": 1 },  { "_color":"red", "x": 5, "y": 1 },  { "_color":"yellow", "x": 6, "y": 1 },  { "_color":"blue", "x": 7, "y": 1 }  ],    [  { "_color":"blue", "x": 0, "y": 2 },  { "_color":"blue", "x": 1, "y": 2 },  { "_color":"green", "x": 2, "y": 2 },  { "_color":"red", "x": 3, "y": 2 },  { "_color":"blue", "x": 4, "y": 2 },  { "_color":"yellow", "x": 5, "y": 2 },  { "_color":"yellow", "x": 6, "y": 2 },  { "_color":"green", "x": 7, "y": 2 }  ],[  { "_color":"green", "x": 0, "y": 3 },  { "_color":"green", "x": 1, "y": 3 },  { "_color":"yellow", "x": 2, "y": 3 },  { "_color":"green", "x": 3, "y": 3 },  { "_color":"blue", "x": 4, "y": 3 },  { "_color":"yellow", "x": 5, "y": 3 },  { "_color":"blue", "x": 6, "y": 3 },  { "_color":"red", "x": 7, "y": 3 }  ],[  { "_color":"yellow", "x": 0, "y": 4 },  { "_color":"yellow", "x": 1, "y": 4 },  { "_color":"red", "x": 2, "y": 4 },  { "_color":"red", "x": 3, "y": 4 },  { "_color":"red", "x": 4, "y": 4 },  { "_color":"red", "x": 5, "y": 4 },  { "_color":"green", "x": 6, "y": 4 },  { "_color":"green", "x": 7, "y": 4 }  ],[  { "_color":"red", "x": 0, "y": 5 },  { "_color":"red", "x": 1, "y": 5 },  { "_color":"blue", "x": 2, "y": 5 },  { "_color":"green", "x": 3, "y": 5 },  { "_color":"blue", "x": 4, "y": 5 },  { "_color":"red", "x": 5, "y": 5 },  { "_color":"yellow", "x": 6, "y": 5 },  { "_color":"blue", "x": 7, "y": 5 }  ],[  { "_color":"blue", "x": 0, "y": 6 },  { "_color":"blue", "x": 1, "y": 6 },  { "_color":"yellow", "x": 2, "y": 6 },  { "_color":"yellow", "x": 3, "y": 6 },  { "_color":"blue", "x": 4, "y": 6 },  { "_color":"blue", "x": 5, "y": 6 },  { "_color":"red", "x": 6, "y": 6 },  { "_color":"yellow", "x": 7, "y": 6 }  ],[  { "_color":"green", "x": 0, "y": 7 },  { "_color":"green", "x": 1, "y": 7 },  { "_color":"green", "x": 2, "y": 7 },  { "_color":"green", "x": 3, "y": 7 },  { "_color":"blue", "x": 4, "y": 7 },  { "_color":"green", "x": 5, "y": 7 },  { "_color":"red", "x": 6, "y": 7 },  { "_color":"blue", "x": 7, "y": 7 }  ],[  { "_color":"yellow", "x": 0, "y": 8 },  { "_color":"yellow", "x": 1, "y": 8 },  { "_color":"yellow", "x": 2, "y": 8 },  { "_color":"yellow", "x": 3, "y": 8 },  { "_color":"red", "x": 4, "y": 8 },  { "_color":"yellow", "x": 5, "y": 8 },  { "_color":"blue", "x": 6, "y": 8 },  { "_color":"yellow", "x": 7, "y": 8 }  ],[  { "_color":"red", "x": 0, "y": 9 },  { "_color":"red", "x": 1, "y": 9 },  { "_color":"yellow", "x": 2, "y": 9 },  { "_color":"red", "x": 3, "y": 9 },  { "_color":"red", "x": 4, "y": 9 },  { "_color":"blue", "x": 5, "y": 9 },  { "_color":"yellow", "x": 6, "y": 9 },  { "_color":"blue", "x": 7, "y": 9 }  ]      ]}';
   Level testLevel;
 
   /**
@@ -93,11 +94,12 @@ class controller
 
     // Create View and GameKeyCom
     _gamekey = new GameKeyCommunicator();
-    _view = new View();
+    _view = new View(devicePlatform);
 
     // Load Test Level
     loadLevels();
 
+    print("normalPrint");
     _view.printDebugMessage("Mapped Level Constructor #2");
 
     // enable Keyboard Events
@@ -143,7 +145,7 @@ class controller
    */
   Platformtype detectDevice()
   {
-    /*String device = window.navigator.platform;
+    String device = window.navigator.platform;
     device = device.toLowerCase();
     if(device.contains("arm") || device.contains("iphone") || device.contains("android") || device.contains("aarch64") || device.contains("ipod"))
     {
@@ -156,7 +158,7 @@ class controller
     else
     {
       return Platformtype.Computer;
-    }*/
+    }
   }
 
   /**
@@ -225,7 +227,7 @@ class controller
       }
       */
 
-      Map level = JSON.decode(testJson3);
+      Map level = JSON.decode(firstViewTest);
       List<List<Map>> mapField = level["_startField"];
       testLevel = new Level(
           level["_colors"],
@@ -267,7 +269,7 @@ class controller
   {
     _view.printDebugMessage("Test Control Events");
 
-    /*window.onKeyDown.listen((KeyboardEvent ev)
+    window.onKeyDown.listen((KeyboardEvent ev)
     {
       _view.printDebugMessage("Key Pushed " + ev.keyCode.toString());
       // Escape from Event if no Game is running
@@ -282,10 +284,10 @@ class controller
         case KeyCode.RIGHT:
           _currentField.addCommand(new Command(Action.moveRight));
           break;
-        case KeyCode.UP:
+        case KeyCode.DOWN:
           _currentField.addCommand(new Command(Action.moveDown));
           break;
-        case KeyCode.DOWN:
+        case KeyCode.UP:
           _currentField.addCommand(new Command(Action.moveUp));
           break;
         case KeyCode.SPACE:
@@ -302,7 +304,7 @@ class controller
           break;
       }
     });
-    */
+
   }
 
   /**
@@ -333,9 +335,9 @@ class controller
       // Create Timers etc.
       //timerPlaytime = new Timer.periodic(timerPlaytimeDuration,(_) => _currentField.timerIncreaseLevelTime());
         timerFieldAction = new Timer.periodic(timerFieldActionDuration, (_) => _currentField.timerDoNextAction());
-        //timerFieldUp = new Timer.periodic(timerFieldUpDuration, (_) => _currentField.timerFieldUp());
+        timerFieldUp = new Timer.periodic(timerFieldUpDuration, (_) => _currentField.timerFieldUp());
         timerGravity = new Timer.periodic(timerGravityDuration, (_) => _currentField.timerApplyGravity());
-        timerView = new Timer.periodic(timerViewDuration, (_) => _view.update(_currentField));
+       timerView = new Timer.periodic(timerViewDuration, (_) => _view.update(_currentField));
         // set Flag game running
         isGameRunning = true;
 

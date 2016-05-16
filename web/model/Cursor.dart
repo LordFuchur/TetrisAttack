@@ -33,7 +33,7 @@ class Cursor
   {
     Point<int> up = new Point(_cursor1.x, _cursor1.y+1);
     Point<int> right = new Point(_cursor2.x+1, _cursor2.y);
-    Point<int> down = new Point(_cursor1.x-1, _cursor1.y-1);
+    Point<int> down = new Point(_cursor1.x, _cursor1.y-1);
     Point<int> left = new Point(_cursor1.x-1, _cursor1.y);
 
     switch (dir) {

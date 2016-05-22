@@ -345,8 +345,7 @@ class controller
        timerView = new Timer.periodic(timerViewDuration, (_) => _view.update(_currentField));
         // set Flag game running
         isGameRunning = true;
-        break;
-      case eventType.BlockGravity:
+
         break;
     }
 

@@ -6,36 +6,43 @@
 -->
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="scaffolded-by" content="https://github.com/google/stagehand">
-        <title>Tetris-Attack</title>
-        <link rel="stylesheet" href="styles.css">
-        <script defer src="main.dart" type="application/dart"></script>
-        <script defer src="packages/browser/dart.js"></script>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="scaffolded-by" content="https://github.com/google/stagehand">
+    <title>Tetris-Attack</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="main.dart" type="application/dart"></script>
+    <script defer src="packages/browser/dart.js"></script>
+</head>
 
-    <body>
-        <div id="gameArea" class="gameArea">
-            <div id="field" class ="hauptfeld">
-                Hauptfeld
-                <table id = "gameplayField" class="gameplayField">
-                </table>
-                <div id="Menu" class="Menu" style="display: none">
-                    <button id="StartButton" class="MenuEntry">Start</button><br>
-                    <button id="HighScore" class="MenuEntry">Highscore</button>
-                </div>
-            </div>
+<body>
+<div id="gameArea" class="gameArea">
+    <div id ="Headline" class="headline">
+        Hauptfeld
+    </div>
+    <div id="tableDiv" class = "tableDiv">
+        <table id = "gameplayField" class="gameplayField">
+        </table>
+    </div>
+    <div id = "infoArea" class = "infoArea">
+        <div id = "levelInformationDiv" class = "levelInformationDiv">
         </div>
-
-
-        <div id="debugBox" class= "debugDiv">
-            <span id="consoleHeader">Debug Console</span>
-
-            <textarea id ="debugTextBox" class = "debugTextBox" readonly></textarea>
+        <div id = "levelBlockInfoDiv" class = "levelBlockInfoDiv">
         </div>
-    </body>
+    </div>
+    <div id="MainMenu" class="MainMenu" style="display: none">
+        <button id="StartButton" class="MenuEntry">Start</button><br>
+        <button id="HighScore" class="MenuEntry">Highscore</button>
+    </div>
+</div>
+
+
+<div id="debugBox" class= "debugDiv">
+    <span id="consoleHeader">Debug Console</span>
+    <textarea id ="debugTextBox" class = "debugTextBox"></textarea>
+</div>
+</body>
 </html>
 

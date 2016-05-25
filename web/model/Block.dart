@@ -51,6 +51,7 @@ class Block
     //throw new Exception("not implemented yet");
     _dissolveCounter++;
   }
+
   void checkNeighbour(List<Block> dissolveList,Playfield playfield)
   {
     //check left and right

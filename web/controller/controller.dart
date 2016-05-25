@@ -52,11 +52,11 @@ class controller
 
   static const timerFieldUpDuration = const Duration(seconds: 4);
 
-  static const timerFieldActionDuration = const Duration(milliseconds:  5);
+  static const timerFieldActionDuration = const Duration(milliseconds:  2);
 
   static const timerGravityDuration = const Duration(milliseconds: 50 );
 
-  static const timerViewDuration = const Duration(milliseconds : 10);
+  static const timerViewDuration = const Duration(milliseconds : 2);
 
   /**
    * Variables
@@ -345,7 +345,8 @@ class controller
        timerView = new Timer.periodic(timerViewDuration, (_) => _view.update(_currentField));
         // set Flag game running
         isGameRunning = true;
-
+        break;
+      case eventType.BlockGravity:
         break;
     }
 

@@ -10,7 +10,8 @@ enum eventType
 {
   Win,
   GameOver,
-  Loaded
+  Loaded,
+  BlockGravity
 }
 
 
@@ -21,7 +22,7 @@ class Playfield
   Queue<Command> _actionQueue = new Queue<Command>();
   StreamController _eventController = new StreamController.broadcast();
 
-  int _currentScore =0;
+  int _currentScore = 0;
   int _currentLevelTime; // in seconds
   List<Block> _toDissolve;
   int _fieldX;
@@ -143,7 +144,6 @@ class Playfield
    */
   void timerFieldUp()
   {
-
     // Move the Field up and update the Position of the Blocks
     //-2 here, because we need to skip the first row in the array from top
     for(int row = (_fieldY - 2); row >= 0; row--)
@@ -207,6 +207,8 @@ class Playfield
   void timerApplyGravity()
   {
 
+    raise(eventType.BlockGravity);
+    return;
     bool columnFalling = false;
     for(int column = 0;column < _field[0].length;column++)
     {
@@ -398,6 +400,9 @@ class Playfield
         break;
       case eventType.Loaded:
         _eventController.add(eventType.Loaded);
+        break;
+      case eventType.BlockGravity:
+        _eventController.add(eventType.BlockGravity);
         break;
     }
   }

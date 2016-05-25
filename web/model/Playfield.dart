@@ -23,7 +23,7 @@ class Playfield
   StreamController _eventController = new StreamController.broadcast();
 
   int _currentScore = 0;
-  int _currentLevelTime; // in seconds
+  int _currentLevelTime = 0; // in seconds
   List<Block> _toDissolve;
   int _fieldX;
   int _fieldY;
@@ -56,18 +56,7 @@ class Playfield
     }
     else
     {
-      /*// Sandbox Mode without Level
-      _field = new List<List<Block>>(y);
-      // Create field and fill with null
-      for(int y = 0; y < _fieldY; y++)
-      {
-        _field.add(new List<Block>());
-        for (int x = 0; x < _fieldX; x++)
-        {
-          _field[y].add(null);
-        }
-      }
-      */
+      // Sandbox Mode without Level
 
       _field = new List<List<Block>>(_fieldY);
       for(int row = 0;row < _field.length;row++)
@@ -208,7 +197,6 @@ class Playfield
   {
 
     raise(eventType.BlockGravity);
-    return;
     bool columnFalling = false;
     for(int column = 0;column < _field[0].length;column++)
     {
@@ -428,6 +416,11 @@ class Playfield
   int getCurrentScore()
   {
     return _currentScore;
+  }
+
+  int getLevelScore()
+  {
+    return _level.getRequiredScore();
   }
 
   /**

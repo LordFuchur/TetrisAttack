@@ -17,9 +17,9 @@ class View
 
   final debugHeader = querySelector('#DebugHeader');
 
-  final infoBox = querySelector("infoArea");
+  final infoBox = querySelector("#levelInformationDiv");
 
-  final levelBlockInfo = querySelector("blockInfoArea");
+  final levelBlockInfo = querySelector("#levelBlockInfoDiv");
 
   final TableElement gameplayTable = querySelector("#gameplayField");
 
@@ -37,13 +37,13 @@ class View
   View(this.platform) {}
 
 
-  void _writeInfoBox(int levelTime,int score, int levelNum)
+  void _writeInfoBox(int levelTime,int score, int levelNum, int levelScore)
   {
     String infoBoxString = "";
 
-    infoBoxString += '<b>Level: ' + levelNum.toString() + '</b><br>';
-    infoBoxString += '<b>Score: ' + score.toString() + '</b><br>';
-    infoBoxString += '<b>Timeleft: ' + levelTime.toString() + ' Seconds</b><br>';
+    infoBoxString += '<b>Level: </b>' + levelNum.toString() + '<br>';
+    infoBoxString += '<b>Score: </b>' + score.toString() + ' / ' + levelScore.toString() + '<br>';
+    infoBoxString += '<b>Timeleft: </b>' + levelTime.toString() + '<b> Seconds</b><br>';
 
     infoBox.setInnerHtml(infoBoxString);
   }
@@ -59,7 +59,7 @@ class View
 
     String tableString = "";
     List<List<Block>> retList = model.getPrintablePlayfield();
-    printDebugMessage("pre for loop");
+
     for (int row = retList.length-1; row >=0; row--)
     {
       tableString += "<tr>";
@@ -76,6 +76,7 @@ class View
     Point cur2 =  model.getCursor().getPosCursor2();
     querySelector("#TD"+cur1.x.toString()+"g"+cur1.y.toString()).setAttribute("class","cursor");
     querySelector("#TD"+cur2.x.toString()+"g"+cur2.y.toString()).setAttribute("class","cursor");
+    _writeInfoBox(model.getTimeleft(),model.getCurrentScore(),model.getCurrentLevelNumber(),model.getLevelScore());
   }
 
   void showScore(Map<String,int> scoreList)

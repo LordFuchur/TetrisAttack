@@ -67,6 +67,10 @@ class View
         // get block
         currentBlock = field[row][column];
         // check if block exist and set color
+        if(model.getCursor().getPosCursor1() == new Point(column,row) || model.getCursor().getPosCursor2() == new Point(column,row))
+          genField[row][column].setAttribute("class","cursor");
+        else
+          genField[row][column].setAttribute("class","tableCell");
         if(currentBlock != null)
         {
           genField[row][column].setAttribute("bgcolor",currentBlock.getColor());

@@ -1,5 +1,6 @@
 import "dart:math";
 import "Playfield.dart";
+import "dart:async";
 
 
 List<String> typedList = <String>["normalBlock"];
@@ -12,6 +13,7 @@ class Block
   bool _isFalling;
   bool _isLocked;
   Point _Pos;
+  Playfield _playfield;
 
   Block(this._color,this._Pos)
   {
@@ -19,14 +21,17 @@ class Block
     _isFalling = false;
     _isLocked = false;
   }
+  void subscribeEvents(Playfield playfield)
+  {
+    this._playfield = playfield;
+    //_playfield.allEvents.listen((e)=> this.blockGravityApply());
+  }
   String getColor()
   {
-    //throw new Exception("not implemented yet");
     return _color;
   }
   bool isLocked()
   {
-    //throw new Exception("not implemented yet");
     return _isLocked;
   }
   void setIsLocked(bool value)
@@ -35,7 +40,6 @@ class Block
   }
   bool isFalling()
   {
-    //throw new Exception("not implemented yet");
     return _isFalling;
   }
   void setFalling(bool value)
@@ -48,10 +52,8 @@ class Block
   }
   void setToDissolve()
   {
-    //throw new Exception("not implemented yet");
     _dissolveCounter++;
   }
-
   void checkNeighbour(List<Block> dissolveList,Playfield playfield)
   {
     //check left and right
@@ -80,14 +82,37 @@ class Block
       }
     }
   }
+
+  bool blockGravityApply(Playfield playfield)
+  {
+    return false;
+    this._isFalling = false;
+    Point iteratorCoords = this._Pos;
+    //iterate through all the blocks, which are under the current one, and determine if at least one is falling,
+    // or if there is a null field(free space)
+
+    while(iteratorCoords.y >1)
+    {
+      if(playfield.getBlockFromField(iteratorCoords) == null || playfield.getBlockFromField(iteratorCoords).isFalling() )
+      {
+        this._isFalling = true;
+        break;
+      }
+      iteratorCoords = new Point(iteratorCoords.x,iteratorCoords.y-1);
+    }
+    if(this._isFalling)
+    {
+      this.setPos(new Point(this._Pos.x,this._Pos.y-1));
+      playfield.setBlockIntoField(this,this._Pos);
+    }
+  }
   void setPos(Point pos)
   {
     this._Pos = pos;
-    //throw new Exception("not implemented yet");
   }
   Point getPos()
   {
-    //throw new Exception("not implemented yet");
+
     return this._Pos;
   }
   Map convertBlock()

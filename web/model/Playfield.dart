@@ -11,7 +11,6 @@ enum eventType
   Win,
   GameOver,
   Loaded,
-  BlockGravity
 }
 
 
@@ -75,7 +74,18 @@ class Playfield
     }
     else
     {
-      // Sandbox Mode without Level
+      /*// Sandbox Mode without Level
+      _field = new List<List<Block>>(y);
+      // Create field and fill with null
+      for(int y = 0; y < _fieldY; y++)
+      {
+        _field.add(new List<Block>());
+        for (int x = 0; x < _fieldX; x++)
+        {
+          _field[y].add(null);
+        }
+      }
+      */
 
       _field = new List<List<Block>>(_fieldY);
       for(int row = 0;row < _field.length;row++)
@@ -218,8 +228,6 @@ class Playfield
    */
   void timerApplyGravity()
   {
-
-    raise(eventType.BlockGravity);
     bool columnFalling = false;
     for(int column = 0;column < _field[0].length;column++)
     {
@@ -241,12 +249,12 @@ class Playfield
       {
         if(_field[row][column]!= null && _field[row][column].isFalling() && isValidCoords(new Point(column,row-1)))
         {
+          //move the current block one place down and delete it from the old position
           _field[row-1][column] = _field[row][column];
           _field[row-1][column].setPos(new Point(column,row-1));
           _field[row][column] = null;
-          for(int columnChecker = row-1;columnChecker > 0;columnChecker--)
+          /*for(int columnChecker = row-1;columnChecker > 0;columnChecker--)
           {
-
             _field[row-1][column].setFalling(false);
             _field[row-1][column].setIsLocked(false);
             if(_field[columnChecker][column] == null)
@@ -254,7 +262,7 @@ class Playfield
               _field[row-1][column].setFalling(true);
               _field[row-1][column].setIsLocked(true);
             }
-          }
+          }*/
         }
       }
     }
@@ -378,6 +386,7 @@ class Playfield
    */
   void setBlockIntoField(Block block ,[Point nullArg = null])
   {
+
     if(nullArg != null)
     {
       if(isValidCoords(nullArg))
@@ -411,9 +420,6 @@ class Playfield
         break;
       case eventType.Loaded:
         _eventController.add(eventType.Loaded);
-        break;
-      case eventType.BlockGravity:
-        _eventController.add(eventType.BlockGravity);
         break;
     }
   }

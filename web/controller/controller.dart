@@ -50,7 +50,7 @@ class controller
 
   static const timerPlaytimeDuration = const Duration(seconds: 1);
 
-  static const timerFieldUpDuration = const Duration(seconds: 4);
+  static const timerFieldUpDuration = const Duration(seconds: 8);
 
   static const timerFieldActionDuration = const Duration(milliseconds:  2);
 
@@ -352,8 +352,6 @@ class controller
         // set Flag game running
         isGameRunning = true;
 
-        break;
-      case eventType.BlockGravity:
         break;
     }
 

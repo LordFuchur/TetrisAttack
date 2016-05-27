@@ -56,7 +56,18 @@ class Playfield
     }
     else
     {
-      // Sandbox Mode without Level
+      /*// Sandbox Mode without Level
+      _field = new List<List<Block>>(y);
+      // Create field and fill with null
+      for(int y = 0; y < _fieldY; y++)
+      {
+        _field.add(new List<Block>());
+        for (int x = 0; x < _fieldX; x++)
+        {
+          _field[y].add(null);
+        }
+      }
+      */
 
       _field = new List<List<Block>>(_fieldY);
       for(int row = 0;row < _field.length;row++)
@@ -195,8 +206,9 @@ class Playfield
    */
   void timerApplyGravity()
   {
-
     raise(eventType.BlockGravity);
+    _triggerDissolve();
+    return;
     bool columnFalling = false;
     for(int column = 0;column < _field[0].length;column++)
     {
@@ -321,10 +333,12 @@ class Playfield
           {
         case "normalBlock":
           newBlock = new Block(colors[rngColor],new Point(column,0));
+          newBlock.subscribeEvents(this);
           break;
 
         default:
           newBlock = new Block(colors[rngColor],new Point(column,0));
+          newBlock.subscribeEvents(this);
           break;
 
       } // end switch case
@@ -355,6 +369,7 @@ class Playfield
    */
   void setBlockIntoField(Block block ,[Point nullArg = null])
   {
+
     if(nullArg != null)
     {
       if(isValidCoords(nullArg))

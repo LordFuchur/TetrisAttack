@@ -50,7 +50,7 @@ class controller
 
   static const timerPlaytimeDuration = const Duration(seconds: 1);
 
-  static const timerFieldUpDuration = const Duration(seconds: 4);
+  static const timerFieldUpDuration = const Duration(seconds: 8);
 
   static const timerFieldActionDuration = const Duration(milliseconds:  2);
 
@@ -232,7 +232,7 @@ class controller
       testLevel = new Level(
           level["_colors"],
           level["_blocks"],
-          Level.convertStartfieldMapToStartField(mapField),
+          Level.convertStartfieldMapToStartField(mapField,_currentField),
           level["_levelTimeSec"],
           level["_comboHoldTime"],
           level["_requiredScore"],

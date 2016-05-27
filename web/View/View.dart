@@ -17,13 +17,17 @@ class View
 
   final debugHeader = querySelector('#DebugHeader');
 
-  final infoBox = querySelector("#levelInformationDiv");
+  final infoBox = querySelector("#infoArea");
 
   final levelBlockInfo = querySelector("#levelBlockInfoDiv");
 
+  final tableDiv = querySelector("#tableDiv");
+
+  final mainmenu = querySelector("#MainMenu");
+
   final TableElement gameplayTable = querySelector("#gameplayField");
 
-  HtmlElement get StartButton => querySelector('#startButtonArea');
+  HtmlElement get StartButton => querySelector('#StartButton');
 
   Platformtype platform;
   /**
@@ -48,6 +52,8 @@ class View
     infoBox.setInnerHtml(infoBoxString);
   }
   bool once = false;
+
+
   void update(Playfield model)
   {
 
@@ -60,22 +66,25 @@ class View
     String tableString = "";
     List<List<Block>> retList = model.getPrintablePlayfield();
 
-    for (int row = retList.length-1; row >=0; row--)
+    for (int row = retList.length; row >0; row--)
     {
       tableString += "<tr>";
       for (int column = 0; column < retList[0].length; column++)
       {
-        Block temp = model.getBlockFromField(new Point(column,row));
-        tableString += '<td id="TD' + column.toString() + 'g'+ row.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : model.getBlockFromField(new Point(column,row)).getColor() )+ '" class="tableCell"></td>';
+
+        //Block temp = model.getBlockFromField(new Point(column,row));
+        Block temp = retList[row-1][column];
+        tableString += '<td id="TD' + column.toString() + 'g'+ row.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : /*model.getBlockFromField(new Point(column,row)).getColor()*/retList[row-1][column].getColor() )+ '" class="tableCell"></td>';
       }
       tableString += "</tr>\n";
     }
     gameplayTable.setInnerHtml(tableString);
-    //_writeInfoBox(model.getTimeleft(),model.getCurrentScore(),model.getCurrentLevelNumber());
+
     Point cur1 =  model.getCursor().getPosCursor1();
     Point cur2 =  model.getCursor().getPosCursor2();
     querySelector("#TD"+cur1.x.toString()+"g"+cur1.y.toString()).setAttribute("class","cursor");
     querySelector("#TD"+cur2.x.toString()+"g"+cur2.y.toString()).setAttribute("class","cursor");
+
     _writeInfoBox(model.getTimeleft(),model.getCurrentScore(),model.getCurrentLevelNumber(),model.getLevelScore());
   }
 

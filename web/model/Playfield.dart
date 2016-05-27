@@ -50,9 +50,28 @@ class Playfield
     if(level != null)
     {
       this._level = level;
+      List<List<Block>> temp = level.getStartField();
       // set start field
-      _field = _level.getStartField();
-      _field.insert(_field.length,new List<Block>(_fieldX));
+      //_field = _level.getStartField();
+      //_field.insert(_field.length,new List<Block>(_fieldX));
+
+      _field = new List<List<Block>>(_fieldY);
+      for(int row = 0;row < _field.length;row++)
+      {
+        _field[row] = new List<Block>();
+        for (int column = 0; column < x; column++)
+        {
+          if(row != 0)
+          {
+            _field[row].add(temp[row-1][column]);
+          }
+          else
+          {
+            _field[row].add(null);
+          }
+        }
+      }
+
     }
     else
     {
@@ -87,8 +106,9 @@ class Playfield
 
   List<List<Block>> getPrintablePlayfield()
   {
+    return _field;
     List<List<Block>> retList = new List<List<Block>>();
-    for(int row = _field.length-1;row >= 0;row--)
+    for(int row = _fieldY - 1; row >= 0 ;row--)
     {
       retList.add(_field[row]);
     }
@@ -167,6 +187,7 @@ class Playfield
         // a Block reached the upper Border of the play field
         // Raise Game Over Event
         raise(eventType.GameOver);
+        clearField();
       }
     }
     addRow(_level.getBlocks(),_level.getColors());
@@ -190,11 +211,13 @@ class Playfield
       {
         // Raise Win Event
         raise(eventType.Win);
+        clearField();
       }
       else
       {
         // Raise Game Over Event
         raise(eventType.GameOver);
+        clearField();
       }
     }
 
@@ -450,5 +473,17 @@ class Playfield
   {
     return this._cursor;
   }
+
+  void clearField()
+  {
+    for(int row = 0; row < _fieldY; row++)
+    {
+      for(int column = 0; column < _fieldX; column++)
+      {
+        _field[row][column] = null;
+      }
+    }
+  }
+
 
 }

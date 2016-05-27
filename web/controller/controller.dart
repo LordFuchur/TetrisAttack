@@ -56,7 +56,7 @@ class controller
 
   static const timerGravityDuration = const Duration(milliseconds: 50);
 
-  static const timerViewDuration = const Duration(milliseconds : 2);
+  static const timerViewDuration = const Duration(milliseconds : 1);
 
   /**
    * Variables
@@ -73,6 +73,7 @@ class controller
   String gravityTest = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[ [ { "_color":"red", "x": 3, "y": 5 }   ]]}';
   String gravityTestFusion = '{"_levelNum":1,"_levelTimeSec":120,"_requiredScore":1000,"_comboHoldTime":8,"_colors":[ "normalBlock" ],"_blocks":[ "red","blue","green","yellow" ],"_startField":[                                     [ { "_color":"red", "x": 2, "y": 8 }, { "_color":"red", "x": 3, "y": 8 }, { "_color":"red", "x": 4, "y": 8 }, { "_color":"red", "x": 5, "y": 8 }, { "_color":"red", "x": 6, "y": 8 }],                                   [ { "_color":"red", "x": 3, "y": 7 }, { "_color":"red", "x": 4, "y": 7 }, { "_color":"red", "x": 5, "y": 7 } ]                                   ]}';
   String firstViewTest = '{"_levelNum":1,"_levelTimeSec":60,"_requiredScore":30,"_comboHoldTime":2,"_blocks":[ "normalBlock" ],"_colors":[ "red","blue","green","yellow","black","purple" ],"_startField":[  [  { "_color":"red", "x": 0, "y": 1 },  { "_color":"red", "x": 1, "y": 1 },  { "_color":"blue", "x": 2, "y": 1 },  { "_color":"yellow", "x": 3, "y": 1 },  { "_color":"red", "x": 4, "y": 1 },  { "_color":"red", "x": 5, "y": 1 },  { "_color":"yellow", "x": 6, "y": 1 },  { "_color":"blue", "x": 7, "y": 1 }  ],    [  { "_color":"blue", "x": 0, "y": 2 },  { "_color":"blue", "x": 1, "y": 2 },  { "_color":"green", "x": 2, "y": 2 },  { "_color":"red", "x": 3, "y": 2 },  { "_color":"blue", "x": 4, "y": 2 },  { "_color":"yellow", "x": 5, "y": 2 },  { "_color":"yellow", "x": 6, "y": 2 },  { "_color":"green", "x": 7, "y": 2 }  ],[  { "_color":"green", "x": 0, "y": 3 },  { "_color":"green", "x": 1, "y": 3 },  { "_color":"yellow", "x": 2, "y": 3 },  { "_color":"green", "x": 3, "y": 3 },  { "_color":"blue", "x": 4, "y": 3 },  { "_color":"yellow", "x": 5, "y": 3 },  { "_color":"blue", "x": 6, "y": 3 },  { "_color":"red", "x": 7, "y": 3 }  ],[  { "_color":"yellow", "x": 0, "y": 4 },  { "_color":"yellow", "x": 1, "y": 4 },  { "_color":"red", "x": 2, "y": 4 },  { "_color":"red", "x": 3, "y": 4 },  { "_color":"red", "x": 4, "y": 4 },  { "_color":"red", "x": 5, "y": 4 },  { "_color":"green", "x": 6, "y": 4 },  { "_color":"green", "x": 7, "y": 4 }  ],[  { "_color":"red", "x": 0, "y": 5 },  { "_color":"red", "x": 1, "y": 5 },  { "_color":"blue", "x": 2, "y": 5 },  { "_color":"green", "x": 3, "y": 5 },  { "_color":"blue", "x": 4, "y": 5 },  { "_color":"red", "x": 5, "y": 5 },  { "_color":"yellow", "x": 6, "y": 5 },  { "_color":"blue", "x": 7, "y": 5 }  ],[  { "_color":"blue", "x": 0, "y": 6 },  { "_color":"blue", "x": 1, "y": 6 },  { "_color":"yellow", "x": 2, "y": 6 },  { "_color":"yellow", "x": 3, "y": 6 },  { "_color":"blue", "x": 4, "y": 6 },  { "_color":"blue", "x": 5, "y": 6 },  { "_color":"red", "x": 6, "y": 6 },  { "_color":"yellow", "x": 7, "y": 6 }  ],[  { "_color":"green", "x": 0, "y": 7 },  { "_color":"green", "x": 1, "y": 7 },  { "_color":"green", "x": 2, "y": 7 },  { "_color":"green", "x": 3, "y": 7 },  { "_color":"blue", "x": 4, "y": 7 },  { "_color":"green", "x": 5, "y": 7 },  { "_color":"red", "x": 6, "y": 7 },  { "_color":"blue", "x": 7, "y": 7 }  ],[  { "_color":"yellow", "x": 0, "y": 8 },  { "_color":"yellow", "x": 1, "y": 8 },  { "_color":"yellow", "x": 2, "y": 8 },  { "_color":"yellow", "x": 3, "y": 8 },  { "_color":"red", "x": 4, "y": 8 },  { "_color":"yellow", "x": 5, "y": 8 },  { "_color":"blue", "x": 6, "y": 8 },  { "_color":"yellow", "x": 7, "y": 8 }  ],[  { "_color":"red", "x": 0, "y": 9 },  { "_color":"red", "x": 1, "y": 9 },  { "_color":"yellow", "x": 2, "y": 9 },  { "_color":"red", "x": 3, "y": 9 },  { "_color":"red", "x": 4, "y": 9 },  { "_color":"blue", "x": 5, "y": 9 },  { "_color":"yellow", "x": 6, "y": 9 },  { "_color":"blue", "x": 7, "y": 9 }  ]      ]}';
+  String secondViewTest = '{"_levelNum":1,"_levelTimeSec":70,"_requiredScore":50,"_comboHoldTime":1,"_colors":[ "red","green","blue","purple","yellow" ],"_blocks":[ "normalBlock" ],"_startField":[  [  { "_color":"red", "x": 0, "y": 0 },  { "_color":"purple", "x": 1, "y": 0 },  { "_color":"purple", "x": 2, "y": 0 },  { "_color":"yellow", "x": 3, "y": 0 },  { "_color":"green", "x": 4, "y": 0 },  { "_color":"red", "x": 5, "y": 0 },  { "_color":"yellow", "x": 6, "y": 0 },  { "_color":"blue", "x": 7, "y": 0 }  ],    [  { "_color":"blue", "x": 0, "y": 1 },  { "_color":"purple", "x": 1, "y": 1 },  { "_color":"red", "x": 2, "y": 1 },  { "_color":"red", "x": 3, "y": 1 },  { "_color":"green", "x": 4, "y": 1 },  { "_color":"yellow", "x": 5, "y": 1 },  { "_color":"yellow", "x": 6, "y": 1 },  { "_color":"blue", "x": 7, "y": 1 }  ],    [  { "_color":"blue", "x": 0, "y": 2 },  { "_color":"green", "x": 1, "y": 2 },  { "_color":"green", "x": 2, "y": 2 },  { "_color":"red", "x": 3, "y": 2 },  { "_color":"blue", "x": 4, "y": 2 },  { "_color":"purple", "x": 5, "y": 2 },  { "_color":"green", "x": 6, "y": 2 },  { "_color":"red", "x": 7, "y": 2 }  ]    ]}';
   Level testLevel;
 
   /**
@@ -100,21 +101,10 @@ class controller
     loadLevels();
 
     print("normalPrint");
-    _view.printDebugMessage("Mapped Level Constructor #2");
 
     // enable Keyboard Events
     controlEvents();
 
-    _view.printDebugMessage("Control Events done");
-
-    // Start new Game
-    newGame();
-
-    _view.printDebugMessage("New Game done");
-
-    _view.update(_currentField);
-
-    _view.printDebugMessage("update Field");
     // GameKey Connection
 
     // Load Config and Level Files
@@ -227,7 +217,7 @@ class controller
       }
       */
 
-      Map level = JSON.decode(firstViewTest);
+      Map level = JSON.decode(secondViewTest);
       List<List<Map>> mapField = level["_startField"];
       testLevel = new Level(
           level["_colors"],
@@ -267,7 +257,19 @@ class controller
 
   void controlEvents()
   {
-    _view.printDebugMessage("Test Control Events");
+    // handle start button
+    _view.StartButton.onClick.listen((_)
+    {
+      // Start new Game
+      newGame();
+      //
+      _view.update(_currentField);
+      //
+      _view.StartButton.setAttribute("disabled","disabled");
+      _view.tableDiv.setAttribute("style","display: block");
+      _view.infoBox.setAttribute("style","display: block");
+      _view.mainmenu.setAttribute("style","display: none");
+    });
 
     window.onKeyDown.listen((KeyboardEvent ev)
     {
@@ -365,6 +367,12 @@ class controller
     timerFieldAction.cancel();
     timerFieldUp.cancel();
     timerGravity.cancel();
+    _view.StartButton.text = "Retry !";
+    _view.StartButton.attributes.remove("disabled");
+    _view.tableDiv.setAttribute("style","display: none");
+    _view.mainmenu.setAttribute("style","display: block");
+    _view.infoBox.setAttribute("style","display: none");
+
   }
 
   /**
@@ -378,5 +386,7 @@ class controller
     timerFieldAction.cancel();
     timerFieldUp.cancel();
     timerGravity.cancel();
+    _view.mainmenu.setAttribute("style","display: block");
+    _view.infoBox.setAttribute("style","display: none");
   }
 }

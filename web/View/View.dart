@@ -30,6 +30,9 @@ class View
   HtmlElement get StartButton => querySelector('#StartButton');
 
   Platformtype platform;
+
+  List<List<HtmlElement>> genField;
+
   /**
    * #####################################################################################
    *
@@ -51,63 +54,74 @@ class View
 
     infoBox.setInnerHtml(infoBoxString);
   }
-  bool once = false;
-
 
   void update(Playfield model)
   {
+    List<List<Block>> field = model.getPrintablePlayfield();
+    Block currentBlock;
 
-    if(once)
+    for(int row = (field.length - 1); row > 0; row--)
     {
-      return;
-    }
-    once = !true;
-
-    String tableString = "";
-    List<List<Block>> retList = model.getPrintablePlayfield();
-
-    for (int row = retList.length; row >0; row--)
-    {
-      tableString += "<tr>";
-      for (int column = 0; column < retList[0].length; column++)
+      for(int column = 0; column < field[0].length; column++)
       {
-
-        //Block temp = model.getBlockFromField(new Point(column,row));
-        Block temp = retList[row-1][column];
-        tableString += '<td id="TD' + column.toString() + 'g'+ row.toString() + '" bgcolor="' + ((temp == null) ? "#FFFFF" : /*model.getBlockFromField(new Point(column,row)).getColor()*/retList[row-1][column].getColor() )+ '" class="tableCell"></td>';
+        // get block
+        currentBlock = field[row][column];
+        // check if block exist and set color
+        if(currentBlock != null)
+        {
+          genField[row][column].setAttribute("bgcolor",currentBlock.getColor());
+        }
+        else
+        {
+          genField[row][column].setAttribute("bgcolor","#FFFFF");
+        }
       }
-      tableString += "</tr>\n";
     }
-    gameplayTable.setInnerHtml(tableString);
-
-    Point cur1 =  model.getCursor().getPosCursor1();
-    Point cur2 =  model.getCursor().getPosCursor2();
-    querySelector("#TD"+cur1.x.toString()+"g"+cur1.y.toString()).setAttribute("class","cursor");
-    querySelector("#TD"+cur2.x.toString()+"g"+cur2.y.toString()).setAttribute("class","cursor");
 
     _writeInfoBox(model.getTimeleft(),model.getCurrentScore(),model.getCurrentLevelNumber(),model.getLevelScore());
   }
 
-  void showScore(Map<String,int> scoreList)
-  {
-  }
-
-  void generateField()
+  void generateField(int fieldX, int fieldY)
   {
     String tableString = "";
-    for (int y = config.getFieldSizeY(); y > 0; y--)
+    for(int row = fieldY; row >= 0; row--)
     {
       tableString += "<tr>";
-      for (int x = 0; x < config.getFieldSizeX(); x++)
+      for(int column = 0; column < fieldX; column++)
       {
-        tableString += '<td id="' + x.toString() + ':'+ y.toString() + '" bgcolor="#FFFFFF" class="tableCell"></td>';
+        if(row != 0)
+        {
+          tableString += '<td id="TDRow' + row.toString() + 'gTDCol' + column.toString() + '" bgcolor="#FFFFF" class="tableCell"></td\n>';
+        }
+        else // unusable Rows
+        {
+          tableString += '<td id="TDRow' + row.toString() + 'gTDCol' + column.toString() + '" bgcolor="#FFFFF" class="lastCell"></td\n>';
+        }
       }
       tableString += "</tr>\n";
     }
-    gameplayTable.setInnerHtml(tableString);
+
+    gameplayTable.innerHtml = tableString;
+
+    // create Shortcut table
+    genField = new List<List<HtmlElement>>(fieldY);
+
+    for(int row = fieldY - 1; row > 0; row--)
+    {
+      genField[row] = new List<HtmlElement>();
+
+      for(int column = 0; column < fieldX; column++)
+      {
+        genField[row].add(querySelector(("#TDRow" + row.toString() + "gTDCol" + column.toString())));
+      }
+    }
+
   }
 
 
+  void showScore(Map<String,int> scoreList)
+  {
+  }
 
   void printDebugMessage(String msg)
   {

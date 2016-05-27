@@ -105,6 +105,9 @@ class controller
     // enable Keyboard Events
     controlEvents();
 
+    // generate Field
+    _view.generateField(config.fieldX,config.fieldY + 1);
+
     // GameKey Connection
 
     // Load Config and Level Files
@@ -264,6 +267,7 @@ class controller
       newGame();
       //
       _view.update(_currentField);
+
       //
       _view.StartButton.setAttribute("disabled","disabled");
       _view.tableDiv.setAttribute("style","display: block");

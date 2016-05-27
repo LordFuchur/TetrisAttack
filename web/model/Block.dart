@@ -17,7 +17,6 @@ class Block
 
   Block(this._color,this._Pos)
   {
-    //playfield.allEvents.listen((Playfield playfield)=>this.blockGravityApply(playfield));
     _dissolveCounter = 0;
     _isFalling = false;
     _isLocked = false;
@@ -25,7 +24,7 @@ class Block
   void subscribeEvents(Playfield playfield)
   {
     this._playfield = playfield;
-    _playfield.allEvents.listen((e)=> this.blockGravityApply(e));
+    //_playfield.allEvents.listen((e)=> this.blockGravityApply());
   }
   String getColor()
   {
@@ -84,18 +83,17 @@ class Block
     }
   }
 
-  bool blockGravityApply(eventType e)
+  bool blockGravityApply(Playfield playfield)
   {
-    if(e != eventType.BlockGravity)
-      return false;
+    return false;
     this._isFalling = false;
     Point iteratorCoords = this._Pos;
     //iterate through all the blocks, which are under the current one, and determine if at least one is falling,
     // or if there is a null field(free space)
 
-    while(_playfield.isValidCoords(iteratorCoords))
+    while(iteratorCoords.y >1)
     {
-      if(_playfield.getBlockFromField(iteratorCoords) == null || _playfield.getBlockFromField(iteratorCoords).isFalling() )
+      if(playfield.getBlockFromField(iteratorCoords) == null || playfield.getBlockFromField(iteratorCoords).isFalling() )
       {
         this._isFalling = true;
         break;
@@ -105,7 +103,7 @@ class Block
     if(this._isFalling)
     {
       this.setPos(new Point(this._Pos.x,this._Pos.y-1));
-      _playfield.setBlockIntoField(this,this._Pos);
+      playfield.setBlockIntoField(this,this._Pos);
     }
   }
   void setPos(Point pos)

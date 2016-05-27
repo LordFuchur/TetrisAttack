@@ -222,7 +222,7 @@ class controller
       testLevel = new Level(
           level["_colors"],
           level["_blocks"],
-          Level.convertStartfieldMapToStartField(mapField,_currentField),
+          Level.convertStartfieldMapToStartField(mapField),
           level["_levelTimeSec"],
           level["_comboHoldTime"],
           level["_requiredScore"],
@@ -348,8 +348,6 @@ class controller
         // set Flag game running
         isGameRunning = true;
 
-        break;
-      case eventType.BlockGravity:
         break;
     }
 

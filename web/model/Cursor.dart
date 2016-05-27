@@ -81,8 +81,6 @@ class Cursor
     fCursor01?.setPos(_cursor2);
     fCursor02 = playfield.getBlockFromField(_cursor2);
 
-
-
     fCursor02?.setPos(_cursor1);
     // set into the Field from Cursor 01
 

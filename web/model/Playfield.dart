@@ -11,7 +11,6 @@ enum eventType
   Win,
   GameOver,
   Loaded,
-  BlockGravity
 }
 
 
@@ -229,9 +228,6 @@ class Playfield
    */
   void timerApplyGravity()
   {
-    raise(eventType.BlockGravity);
-    _triggerDissolve();
-    return;
     bool columnFalling = false;
     for(int column = 0;column < _field[0].length;column++)
     {
@@ -253,12 +249,12 @@ class Playfield
       {
         if(_field[row][column]!= null && _field[row][column].isFalling() && isValidCoords(new Point(column,row-1)))
         {
+          //move the current block one place down and delete it from the old position
           _field[row-1][column] = _field[row][column];
           _field[row-1][column].setPos(new Point(column,row-1));
           _field[row][column] = null;
-          for(int columnChecker = row-1;columnChecker > 0;columnChecker--)
+          /*for(int columnChecker = row-1;columnChecker > 0;columnChecker--)
           {
-
             _field[row-1][column].setFalling(false);
             _field[row-1][column].setIsLocked(false);
             if(_field[columnChecker][column] == null)
@@ -266,7 +262,7 @@ class Playfield
               _field[row-1][column].setFalling(true);
               _field[row-1][column].setIsLocked(true);
             }
-          }
+          }*/
         }
       }
     }
@@ -356,12 +352,10 @@ class Playfield
           {
         case "normalBlock":
           newBlock = new Block(colors[rngColor],new Point(column,0));
-          newBlock.subscribeEvents(this);
           break;
 
         default:
           newBlock = new Block(colors[rngColor],new Point(column,0));
-          newBlock.subscribeEvents(this);
           break;
 
       } // end switch case
@@ -426,9 +420,6 @@ class Playfield
         break;
       case eventType.Loaded:
         _eventController.add(eventType.Loaded);
-        break;
-      case eventType.BlockGravity:
-        _eventController.add(eventType.BlockGravity);
         break;
     }
   }

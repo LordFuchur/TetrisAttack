@@ -75,7 +75,7 @@ class Level
    * #####################################################################################
    */
 
-  static List<List<Block>> convertStartfieldMapToStartField(List<List<Map>> mapStartField,Playfield playfield)
+  static List<List<Block>> convertStartfieldMapToStartField(List<List<Map>> mapStartField)
   {
     List<List<Block>> field = new List<List<Block>>();
     for(int row = 0; row < config.modelFieldY; row++)

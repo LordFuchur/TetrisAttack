@@ -71,7 +71,12 @@ class Block
     }
     Block topBlock = playfield.getBlockFromField(new Point(_Pos.x,_Pos.y+1));
     Block downBlock = playfield.getBlockFromField(new Point(_Pos.x,_Pos.y-1));
-    if(!(topBlock == null || downBlock == null ||topBlock.isLocked() || downBlock.isLocked()))
+    if(topBlock != null
+        && downBlock != null
+        && !topBlock.isLocked()
+        && !downBlock.isLocked()
+        && playfield.isValidCoords(topBlock.getPos())
+        && playfield.isValidCoords(downBlock.getPos()))
     {
       if(topBlock.getColor() == this.getColor() && downBlock.getColor() == this.getColor())
       {

@@ -60,17 +60,18 @@ class Playfield
         _field[row] = new List<Block>();
         for (int column = 0; column < x; column++)
         {
-          if(row != 0)
-          {
-            _field[row].add(temp[row-1][column]);
-          }
-          else
-          {
-            _field[row].add(null);
-          }
+          _field[row].add(null);
         }
       }
-
+      for(List<Block> row in temp)
+      {
+        for(Block block in row)
+        {
+          if(block == null)
+            continue;
+          _field[block.getPos().y][block.getPos().x] = block;
+        }
+      }
     }
     else
     {
@@ -339,7 +340,7 @@ class Playfield
     int rngBlock;
     int rngColor;
 
-    // create new Blocks till the length of the play field
+    // create new Blocks equal to the length of the play field
     for(int column = 0; column < _fieldX; column++)
     {
       // choose a random Block Type and Color
@@ -362,6 +363,7 @@ class Playfield
 
       // insert the new Block into the Field
       _field[0][column] = newBlock;
+      //_field[1][column] = newBlock;
 
     } // end for loop
     //TODO TESTED MANUALLY NEED TO CHECK IN RUNTIME addrow()

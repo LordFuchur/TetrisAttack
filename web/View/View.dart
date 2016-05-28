@@ -60,17 +60,21 @@ class View
     List<List<Block>> field = model.getPrintablePlayfield();
     Block currentBlock;
 
-    for(int row = (field.length - 1); row > 0; row--)
+    for(int row = (field.length -1); row >= 0; row--)
     {
       for(int column = 0; column < field[0].length; column++)
       {
         // get block
         currentBlock = field[row][column];
         // check if block exist and set color
-        if(model.getCursor().getPosCursor1() == new Point(column,row) || model.getCursor().getPosCursor2() == new Point(column,row))
-          genField[row][column].setAttribute("class","cursor");
-        else
-          genField[row][column].setAttribute("class","tableCell");
+        if(genField[row][column] != null)
+        {
+          if (model.getCursor().getPosCursor1() == new Point(column, row) ||
+              model.getCursor().getPosCursor2() == new Point(column, row))
+            genField[row][column].setAttribute("class", "cursor");
+          else
+            genField[row][column].setAttribute("class", "tableCell");
+        }
         if(currentBlock != null)
         {
           genField[row][column].setAttribute("bgcolor",currentBlock.getColor());
@@ -110,7 +114,7 @@ class View
     // create Shortcut table
     genField = new List<List<HtmlElement>>(fieldY);
 
-    for(int row = fieldY - 1; row > 0; row--)
+    for(int row = fieldY - 1; row >= 0; row--)
     {
       genField[row] = new List<HtmlElement>();
 
